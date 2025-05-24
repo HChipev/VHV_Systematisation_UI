@@ -3,6 +3,7 @@ import { call } from 'src/apiCalls/axiosConfig'
 
 // TYPES
 import { LoginRequest, TokenResponse } from 'src/authentication/types'
+import { Roles } from 'src/shared/types'
 
 // AUTHENTICATION
 const login = (data: LoginRequest) =>
@@ -18,7 +19,14 @@ const logout = () =>
     method: 'GET',
   }).then((response) => response.data)
 
+const getUserRoles = () =>
+  call<Roles[]>({
+    url: '/authentication/user/roles',
+    method: 'GET',
+  }).then((response) => response.data)
+
 export const apiCalls = {
   login,
   logout,
+  getUserRoles,
 }

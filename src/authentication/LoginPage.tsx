@@ -24,6 +24,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material'
 // CONSTANTS
 import { COLORS } from 'src/shared/colors'
 import { SESSION_STORAGE_TOKEN_KEY } from 'src/shared/constants'
+import { ROUTES } from 'src/shared/routes'
 
 export const LoginPage: React.FC = () => {
   const { mutate, isPending } = useLogin()
@@ -48,7 +49,7 @@ export const LoginPage: React.FC = () => {
             variant: 'success',
           })
 
-          navigate('/')
+          navigate(ROUTES.HOMEPAGE_ROUTE)
         },
         onError: handleApiError,
       }
@@ -72,6 +73,7 @@ export const LoginPage: React.FC = () => {
           <form onSubmit={handleSubmit}>
             <Stack spacing={2}>
               <TextField
+                size="small"
                 label="Email"
                 type="email"
                 fullWidth
@@ -82,6 +84,7 @@ export const LoginPage: React.FC = () => {
               />
 
               <TextField
+                size="small"
                 label="Password"
                 type={isPasswordVisible ? 'text' : 'password'}
                 fullWidth
@@ -114,7 +117,6 @@ export const LoginPage: React.FC = () => {
               <Button
                 type="submit"
                 variant="contained"
-                color="primary"
                 fullWidth
                 loading={isPending}
               >

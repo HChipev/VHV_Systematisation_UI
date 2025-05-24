@@ -7,6 +7,7 @@ import { enqueueSnackbar } from 'notistack'
 // UTILS
 import { handleApiError, hasRole } from 'src/shared/utils'
 import { useLogout } from 'src/shared/mutations'
+import { useUserRoles } from 'src/shared/queries'
 
 // SELECTORS
 import { getUserRoles } from 'src/shared/userSelectors'
@@ -15,36 +16,50 @@ import { getUserRoles } from 'src/shared/userSelectors'
 import { actions } from 'src/shared/userActions'
 
 // COMPONENTS & STYLES
-import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
 import {
   StyledDrawer,
+  StyledList,
   StyledListItemButton,
   StyledListItemIcon,
 } from 'src/sidebar/styles'
 import { useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
+import { CollapseLink } from 'src/sidebar/components/CollapseLink'
+
+// ICONS
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined'
 
 // CONSTANTS
 import { SIDE_BAR_ROUTES } from 'src/sidebar/constants'
 import { SESSION_STORAGE_TOKEN_KEY } from 'src/shared/constants'
+import { ROUTES } from 'src/shared/routes'
 
 export const Sidebar: React.FC = () => {
   const theme = useTheme()
 
   const { mutate, isPending } = useLogout()
-
-  const userRoles = useSelector(getUserRoles)
+  const { data } = useUserRoles()
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { pathname } = useLocation()
 
+  React.useEffect(() => {
+    if (data) {
+      dispatch(actions.setUserRoles(data))
+    }
+  }, [data, dispatch])
+
+  const userRoles = useSelector(getUserRoles)
+
+  const [isCollapsed, setIsCollapsed] = React.useState(false)
+
   return (
     <Box display="flex" height="100%">
-      <StyledDrawer variant="permanent">
+      <StyledDrawer isCollapsed={isCollapsed} variant="permanent">
         <Box
           display="flex"
           height="100%"
@@ -53,7 +68,14 @@ export const Sidebar: React.FC = () => {
           padding={theme.spacing(3, 1.5, 2.5)}
         >
           <Box display="flex" flexDirection="column" gap={theme.spacing(3)}>
-            <List disablePadding>
+            {/* //TODO: Add logo component */}
+
+            <CollapseLink
+              isSidebarCollapsed={isCollapsed}
+              setIsCollapsed={setIsCollapsed}
+            />
+
+            <StyledList disablePadding>
               {SIDE_BAR_ROUTES.map(({ text, route, icon, requiredRoles }) => {
                 const isSelected = route === pathname
 
@@ -71,24 +93,25 @@ export const Sidebar: React.FC = () => {
                           {icon}
                         </StyledListItemIcon>
 
-                        <ListItemText primary={text} />
+                        {!isCollapsed && <ListItemText primary={text} />}
                       </StyledListItemButton>
                     </ListItem>
                   )
                 )
               })}
-            </List>
+            </StyledList>
           </Box>
 
-          <Box display="flex" flexDirection={'column'} gap={theme.spacing(1)}>
+          <Box display="flex" gap={theme.spacing(1)}>
             <Button
               variant="outlined"
-              color="primary"
+              fullWidth={!isCollapsed}
               onClick={() => {
-                dispatch(actions.setUserRoles([]))
-                sessionStorage.removeItem(SESSION_STORAGE_TOKEN_KEY)
                 mutate(undefined, {
                   onSuccess: () => {
+                    dispatch(actions.setUserRoles([]))
+                    sessionStorage.removeItem(SESSION_STORAGE_TOKEN_KEY)
+                    navigate(ROUTES.LOGIN_ROUTE)
                     enqueueSnackbar('Logged out successfully', {
                       variant: 'success',
                     })
@@ -98,7 +121,9 @@ export const Sidebar: React.FC = () => {
               }}
               loading={isPending}
             >
-              Logout
+              <LogoutOutlinedIcon />
+
+              {!isCollapsed && 'Logout'}
             </Button>
           </Box>
         </Box>

@@ -21,7 +21,7 @@ export const routeConfig: RouteObject[] = [
   },
   {
     path: ROUTES.HOMEPAGE_ROUTE,
-    element: <AppWrapper />,
+    element: <AppWrapper shouldHideSidebar />,
     children: [
       {
         path: ROUTES.LOGIN_ROUTE,

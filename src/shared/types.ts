@@ -10,3 +10,5 @@ export enum Roles {
 export interface ApiError {
   message: string
 }
+
+export type TabsType = 'solid'

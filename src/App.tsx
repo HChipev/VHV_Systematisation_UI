@@ -47,6 +47,11 @@ export const App: React.FC = () => (
       <SnackbarProvider
         maxSnack={3}
         Components={{ default: SnackbarNotification }}
+        autoHideDuration={3000}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
       >
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <RouterProvider router={router} />
