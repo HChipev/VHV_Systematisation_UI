@@ -11,4 +11,18 @@ export interface ApiError {
   message: string
 }
 
-export type TabsType = 'solid'
+export interface PaginatedResponse<T, U> {
+  items: T[]
+  metadata: U
+}
+
+export interface PaginationMetadataBase {
+  count: number
+  page: number
+  pageSize: number
+}
+
+export interface PaginationRequest {
+  page: number
+  pageSize: number
+}

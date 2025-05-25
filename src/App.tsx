@@ -6,6 +6,9 @@ import { Provider } from 'react-redux'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { AxiosError } from 'axios'
+import { pdfjs } from 'react-pdf'
+import 'react-pdf/dist/Page/AnnotationLayer.css'
+import 'react-pdf/dist/Page/TextLayer.css'
 
 // UTILS
 import { store } from 'src/redux/store'
@@ -17,6 +20,11 @@ import { SnackbarNotification } from 'src/shared/components/SnackbarNotification
 import { routeConfig } from 'src/shared/routeConfig'
 
 const router = createBrowserRouter(routeConfig)
+
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  'pdfjs-dist/build/pdf.worker.min.mjs',
+  import.meta.url
+).toString()
 
 const queryClient = new QueryClient({
   defaultOptions: {

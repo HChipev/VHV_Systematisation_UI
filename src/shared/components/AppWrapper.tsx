@@ -45,7 +45,19 @@ export const AppWrapper: React.FC<Props> = ({ shouldHideSidebar = false }) => (
               minWidth="0"
               flexDirection="column"
             >
-              <React.Suspense fallback={<CircularProgress />}>
+              <React.Suspense
+                fallback={
+                  <Box
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    height="100%"
+                    width="100%"
+                  >
+                    <CircularProgress />
+                  </Box>
+                }
+              >
                 <Outlet />
               </React.Suspense>
             </Box>

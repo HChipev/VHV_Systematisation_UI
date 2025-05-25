@@ -7,16 +7,17 @@ import { ROUTES } from 'src/shared/routes'
 import { PrivateRoute } from 'src/shared/components/PrivateRoute'
 import { AppWrapper } from 'src/shared/components/AppWrapper'
 import { LoginPage } from 'src/authentication/LoginPage'
+import { DocumentsPage } from 'src/documents/DocumentsPage'
 
 export const routeConfig: RouteObject[] = [
   {
     path: ROUTES.HOMEPAGE_ROUTE,
     element: <PrivateRoute Component={AppWrapper} />,
     children: [
-      //   {
-      //     index: true,
-      //     element: <DashboardPage />,
-      //   },
+      {
+        index: true,
+        element: <DocumentsPage />,
+      },
     ],
   },
   {
