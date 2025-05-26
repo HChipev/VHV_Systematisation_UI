@@ -1,4 +1,8 @@
 import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
+import {
+  SavedDocumentRequestQuery,
+  ScannedDocumentRequestQuery,
+} from 'src/documents/types'
 
 // UTILS
 import { apiCalls } from 'src/shared/apiCalls'
@@ -8,7 +12,6 @@ import {
   SAVED_DOCUMENTS_QUERY_KEY,
   SCANNED_DOCUMENTS_QUERY_KEY,
 } from 'src/shared/queryKeys'
-import { PaginationRequest } from 'src/shared/types'
 
 // ROLES
 export const useUserRoles = () =>
@@ -18,13 +21,15 @@ export const useUserRoles = () =>
   })
 
 // DOCUMENTS
-export const useScannedDocuments = (paginationQuery: PaginationRequest) =>
+export const useScannedDocuments = (
+  paginationQuery: ScannedDocumentRequestQuery
+) =>
   useSuspenseQuery({
     queryKey: [SCANNED_DOCUMENTS_QUERY_KEY, paginationQuery],
     queryFn: () => apiCalls.getScannedDocuments(paginationQuery),
   })
 
-export const useSavedDocuments = (paginationQuery: PaginationRequest) =>
+export const useSavedDocuments = (paginationQuery: SavedDocumentRequestQuery) =>
   useSuspenseQuery({
     queryKey: [SAVED_DOCUMENTS_QUERY_KEY, paginationQuery],
     queryFn: () => apiCalls.getSavedDocuments(paginationQuery),

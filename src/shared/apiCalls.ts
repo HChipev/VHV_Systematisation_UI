@@ -6,13 +6,14 @@ import { LoginRequest, TokenResponse } from 'src/authentication/types'
 import {
   ResourceTypeResponse,
   SavedDocumentRequest,
+  SavedDocumentRequestQuery,
   SavedDocumentsResponse,
+  ScannedDocumentRequestQuery,
   ScannedDocumentsResponse,
 } from 'src/documents/types'
 import {
   PaginatedResponse,
   PaginationMetadataBase,
-  PaginationRequest,
   Roles,
 } from 'src/shared/types'
 import { createQueryString } from 'src/shared/apiCallsUtils'
@@ -38,13 +39,13 @@ const getUserRoles = () =>
   }).then((response) => response.data)
 
 //DOCUMENTS
-const getScannedDocuments = (paginationQuery: PaginationRequest) =>
+const getScannedDocuments = (paginationQuery: ScannedDocumentRequestQuery) =>
   call<PaginatedResponse<ScannedDocumentsResponse, PaginationMetadataBase>>({
     url: `/documents/scanned${createQueryString(paginationQuery)}`,
     method: 'GET',
   }).then((response) => response.data)
 
-const getSavedDocuments = (paginationQuery: PaginationRequest) =>
+const getSavedDocuments = (paginationQuery: SavedDocumentRequestQuery) =>
   call<PaginatedResponse<SavedDocumentsResponse, PaginationMetadataBase>>({
     url: `/documents/saved${createQueryString(paginationQuery)}`,
     method: 'GET',

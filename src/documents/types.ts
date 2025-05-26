@@ -1,3 +1,7 @@
+// TYPES & CONSTANTS
+import { GridSortDirection } from '@mui/x-data-grid'
+import { PaginationRequest } from 'src/shared/types'
+
 export enum DocumentTabs {
   ScannedDocuments = 'ScannedDocuments',
   SavedDocuments = 'SavedDocuments',
@@ -66,3 +70,13 @@ export interface ResourceType {
 }
 
 export type ResourceTypeResponse = ResourceType[]
+
+export interface ScannedDocumentRequestQuery extends PaginationRequest {
+  sortBy?: string
+  sortDirection?: GridSortDirection
+}
+
+export interface SavedDocumentRequestQuery extends PaginationRequest {
+  sortBy?: string
+  sortDirection?: GridSortDirection
+}
