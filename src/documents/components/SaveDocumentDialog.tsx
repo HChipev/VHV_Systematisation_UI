@@ -62,26 +62,32 @@ export const SaveDocumentDialog: React.FC<Props> = ({
   const documentTypeOptions = documentTypes.map((type) => ({
     label: type.name,
     value: type.id,
+    description: type.description,
   }))
   const descriptionTypeOptions = descriptionTypes.map((type) => ({
     label: type.name,
     value: type.id,
+    description: type.description,
   }))
   const expenseTypeOptions = expenseTypes.map((type) => ({
     label: type.name,
     value: type.id,
+    description: type.description,
   }))
   const paymentTypeOptions = paymentTypes.map((type) => ({
     label: type.name,
     value: type.id,
+    description: type.description,
   }))
   const vehicleOptions = vehicles.map((vehicle) => ({
     label: vehicle.name,
     value: vehicle.id,
+    description: vehicle.description,
   }))
   const officeOptions = offices.map((office) => ({
     label: office.name,
     value: office.id,
+    description: office.description,
   }))
 
   const [form, setForm] = React.useState<Partial<SavedDocumentRequest>>({})
@@ -202,7 +208,7 @@ export const SaveDocumentDialog: React.FC<Props> = ({
             >
               {documentTypeOptions.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
-                  {option.label}
+                  {`${option.label}(${option.description})`}
                 </MenuItem>
               ))}
             </Select>
@@ -235,7 +241,7 @@ export const SaveDocumentDialog: React.FC<Props> = ({
             >
               {expenseTypeOptions.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
-                  {option.label}
+                  {`${option.label}(${option.description})`}
                 </MenuItem>
               ))}
             </Select>
@@ -260,7 +266,7 @@ export const SaveDocumentDialog: React.FC<Props> = ({
             >
               {vehicleOptions.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
-                  {option.label}
+                  {`${option.label}(${option.description})`}
                 </MenuItem>
               ))}
             </Select>
@@ -283,7 +289,7 @@ export const SaveDocumentDialog: React.FC<Props> = ({
             >
               {officeOptions.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
-                  {option.label}
+                  {`${option.label}(${option.description})`}
                 </MenuItem>
               ))}
             </Select>
@@ -344,7 +350,7 @@ export const SaveDocumentDialog: React.FC<Props> = ({
             >
               {paymentTypeOptions.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
-                  {option.label}
+                  {`${option.label}(${option.description})`}
                 </MenuItem>
               ))}
             </Select>
@@ -406,7 +412,7 @@ export const SaveDocumentDialog: React.FC<Props> = ({
             >
               {descriptionTypeOptions.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
-                  {option.label}
+                  {`${option.label}(${option.description})`}
                 </MenuItem>
               ))}
             </Select>

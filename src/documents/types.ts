@@ -74,9 +74,67 @@ export type ResourceTypeResponse = ResourceType[]
 export interface ScannedDocumentRequestQuery extends PaginationRequest {
   sortBy?: string
   sortDirection?: GridSortDirection
+  name?: string
+  startCreatedDateTime?: Date
+  endCreatedDateTime?: Date
 }
 
 export interface SavedDocumentRequestQuery extends PaginationRequest {
   sortBy?: string
   sortDirection?: GridSortDirection
+  startCreatedDateTime?: Date
+  endCreatedDateTime?: Date
+  startIssuedDate?: Date
+  endIssuedDate?: Date
+  fileNameDescription?: string
+  documentType?: string
+  expenseType?: string
+  vehicle?: string
+  office?: string
+  startPeriodStartDate?: Date
+  endPeriodStartDate?: Date
+  startPeriodEndDate?: Date
+  endPeriodEndDate?: Date
+  documentNumber?: string
+  minPrice?: number
+  maxPrice?: number
+  paymentType?: string
+  startPaymentDate?: Date
+  endPaymentDate?: Date
+  counterpartyName?: string
+  counterpartyBulstat?: string
+  descriptionType?: string
+  description?: string
+}
+
+export interface ScanDocumentsFilters {
+  startCreatedDateTime?: Date
+  endCreatedDateTime?: Date
+  name?: string
+}
+
+export interface SavedDocumentFilters {
+  startCreatedDateTime?: Date
+  endCreatedDateTime?: Date
+  startIssuedDate?: Date
+  endIssuedDate?: Date
+  fileNameDescription?: string
+  documentType?: string
+  expenseType?: string
+  vehicle?: string
+  office?: string
+  startPeriodStartDate?: Date
+  endPeriodStartDate?: Date
+  startPeriodEndDate?: Date
+  endPeriodEndDate?: Date
+  documentNumber?: string
+  minPrice?: number
+  maxPrice?: number
+  paymentType?: string
+  startPaymentDate?: Date
+  endPaymentDate?: Date
+  counterpartyName?: string
+  counterpartyBulstat?: string
+  descriptionType?: string
+  description?: string
 }
