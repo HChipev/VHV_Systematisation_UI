@@ -15,7 +15,7 @@ export const SIDE_BAR_ROUTES: SidebarRoutesConfig[] = [
   },
   {
     text: 'Admin',
-    route: ROUTES.HOMEPAGE_ROUTE,
+    route: ROUTES.ADMIN_ROUTE,
     icon: <AdminPanelSettingsOutlinedIcon />,
     requiredRoles: [Roles.Admin],
   },

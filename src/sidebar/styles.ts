@@ -22,6 +22,10 @@ export const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
   minHeight: 48,
   gap: theme.spacing(1),
   justifyContent: 'center',
+  border: `1px solid ${theme.palette.divider}`,
+  '&.Mui-selected': {
+    border: `1px solid ${theme.palette.primary.main}`,
+  },
 }))
 
 export const StyledDrawer = styled(Drawer, {

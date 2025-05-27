@@ -15,8 +15,11 @@ import {
   PaginatedResponse,
   PaginationMetadataBase,
   Roles,
+  User,
 } from 'src/shared/types'
 import { createQueryString } from 'src/shared/apiCallsUtils'
+import { UserRequestQuery } from 'src/admin/types'
+import { ResourceTypeRequestQuery } from 'src/admin/components/types/types'
 
 // AUTHENTICATION
 const login = (data: LoginRequest) =>
@@ -35,6 +38,18 @@ const logout = () =>
 const getUserRoles = () =>
   call<Roles[]>({
     url: '/authentication/user/roles',
+    method: 'GET',
+  }).then((response) => response.data)
+
+const getUsers = (paginationQuery: UserRequestQuery) =>
+  call<PaginatedResponse<User, PaginationMetadataBase>>({
+    url: `/authentication/users${createQueryString(paginationQuery)}`,
+    method: 'GET',
+  }).then((response) => response.data)
+
+const getRoles = () =>
+  call<Roles[]>({
+    url: '/authentication/roles',
     method: 'GET',
   }).then((response) => response.data)
 
@@ -95,6 +110,51 @@ const getPaymentTypes = () =>
     method: 'GET',
   }).then((response) => response.data)
 
+const getPaginatedDocumentTypes = (paginationQuery: ResourceTypeRequestQuery) =>
+  call<PaginatedResponse<ResourceTypeResponse, PaginationMetadataBase>>({
+    url: `/document-types/paginated${createQueryString(paginationQuery)}`,
+    method: 'GET',
+  }).then((response) => response.data)
+
+const getPaginatedDescriptionTypes = (
+  paginationQuery: ResourceTypeRequestQuery
+) =>
+  call<PaginatedResponse<ResourceTypeResponse, PaginationMetadataBase>>({
+    url: `/description-types/paginated${createQueryString(paginationQuery)}`,
+    method: 'GET',
+  }).then((response) => response.data)
+
+const getPaginatedExpenseTypes = (paginationQuery: ResourceTypeRequestQuery) =>
+  call<PaginatedResponse<ResourceTypeResponse, PaginationMetadataBase>>({
+    url: `/expense-types/paginated${createQueryString(paginationQuery)}`,
+    method: 'GET',
+  }).then((response) => response.data)
+
+const getPaginatedOffices = (paginationQuery: ResourceTypeRequestQuery) =>
+  call<PaginatedResponse<ResourceTypeResponse, PaginationMetadataBase>>({
+    url: `/offices/paginated${createQueryString(paginationQuery)}`,
+    method: 'GET',
+  }).then((response) => response.data)
+
+const getPaginatedVehicles = (paginationQuery: ResourceTypeRequestQuery) =>
+  call<PaginatedResponse<ResourceTypeResponse, PaginationMetadataBase>>({
+    url: `/vehicles/paginated${createQueryString(paginationQuery)}`,
+    method: 'GET',
+  }).then((response) => response.data)
+
+const getPaginatedPaymentTypes = (paginationQuery: ResourceTypeRequestQuery) =>
+  call<PaginatedResponse<ResourceTypeResponse, PaginationMetadataBase>>({
+    url: `/payment-types/paginated${createQueryString(paginationQuery)}`,
+    method: 'GET',
+  }).then((response) => response.data)
+
+// HEALTHCHECK
+const getHealthcheck = () =>
+  call({
+    url: '/healthcheck',
+    method: 'GET',
+  }).then((response) => response.data)
+
 export const apiCalls = {
   login,
   logout,
@@ -108,4 +168,13 @@ export const apiCalls = {
   getVehicles,
   getPaymentTypes,
   addSavedDocument,
+  getHealthcheck,
+  getUsers,
+  getRoles,
+  getPaginatedDocumentTypes,
+  getPaginatedDescriptionTypes,
+  getPaginatedExpenseTypes,
+  getPaginatedOffices,
+  getPaginatedVehicles,
+  getPaginatedPaymentTypes,
 }

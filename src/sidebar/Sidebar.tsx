@@ -67,7 +67,12 @@ export const Sidebar: React.FC = () => {
           justifyContent="space-between"
           padding={theme.spacing(3, 1.5, 2.5)}
         >
-          <Box display="flex" flexDirection="column" gap={theme.spacing(3)}>
+          <Box
+            display="flex"
+            flexDirection="column"
+            gap={theme.spacing(3)}
+            bgcolor="inherit"
+          >
             {/* //TODO: Add logo component */}
 
             <CollapseLink

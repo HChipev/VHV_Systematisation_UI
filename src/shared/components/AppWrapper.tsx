@@ -8,6 +8,7 @@ import Box from '@mui/material/Box'
 import { Sidebar } from 'src/sidebar/Sidebar'
 import CircularProgress from '@mui/material/CircularProgress'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { ErrorPage } from 'src/error/ErrorPage'
 
 // TYPES & CONSTANTS
 import { globalStyles, themeOptions } from 'src/shared/themeConfig'
@@ -24,18 +25,7 @@ export const AppWrapper: React.FC<Props> = ({ shouldHideSidebar = false }) => (
 
     <ThemeProvider theme={createTheme(themeOptions)}>
       <Box display="flex" height="100vh" width="100vw" flexDirection="column">
-        <ErrorBoundary
-          fallback={
-            <Box
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              height="100vh"
-            >
-              <h2>Something went wrong.</h2>
-            </Box>
-          }
-        >
+        <ErrorBoundary fallback={<ErrorPage />}>
           <Box display="flex" height="100%" width="100%">
             {!shouldHideSidebar && <Sidebar />}
 

@@ -159,6 +159,7 @@ export const SaveDocumentDialog: React.FC<Props> = ({
         <Box display="flex" flexDirection="column" gap={theme.spacing(3)}>
           <DatePicker
             label="Issued Date"
+            maxDate={new Date()}
             value={form.issuedDate ? new Date(form.issuedDate) : null}
             onChange={(value) =>
               setForm((prev) => ({
@@ -213,6 +214,20 @@ export const SaveDocumentDialog: React.FC<Props> = ({
               ))}
             </Select>
 
+            <Box display="flex" justifyContent="end" width="100%">
+              <Button
+                size="small"
+                onClick={() =>
+                  setForm((prev) => ({
+                    ...prev,
+                    documentTypeId: undefined,
+                  }))
+                }
+              >
+                Reset
+              </Button>
+            </Box>
+
             {errors.documentTypeId && <FormHelperText>Required</FormHelperText>}
           </FormControl>
 
@@ -246,6 +261,20 @@ export const SaveDocumentDialog: React.FC<Props> = ({
               ))}
             </Select>
 
+            <Box display="flex" justifyContent="end" width="100%">
+              <Button
+                size="small"
+                onClick={() =>
+                  setForm((prev) => ({
+                    ...prev,
+                    expenseTypeId: undefined,
+                  }))
+                }
+              >
+                Reset
+              </Button>
+            </Box>
+
             {errors.expenseTypeId && <FormHelperText>Required</FormHelperText>}
           </FormControl>
 
@@ -253,6 +282,7 @@ export const SaveDocumentDialog: React.FC<Props> = ({
             <InputLabel id="vehicle-label">Vehicle</InputLabel>
 
             <Select
+              disabled={Boolean(form.officeId)}
               labelId="vehicle-label"
               name="vehicleId"
               value={form.vehicleId ?? ''}
@@ -270,12 +300,28 @@ export const SaveDocumentDialog: React.FC<Props> = ({
                 </MenuItem>
               ))}
             </Select>
+
+            <Box display="flex" justifyContent="end" width="100%">
+              <Button
+                disabled={Boolean(form.officeId)}
+                size="small"
+                onClick={() =>
+                  setForm((prev) => ({
+                    ...prev,
+                    vehicleId: undefined,
+                  }))
+                }
+              >
+                Reset
+              </Button>
+            </Box>
           </FormControl>
 
           <FormControl fullWidth>
             <InputLabel id="office-label">Office</InputLabel>
 
             <Select
+              disabled={Boolean(form.vehicleId)}
               labelId="office-label"
               name="officeId"
               value={form.officeId ?? ''}
@@ -293,6 +339,21 @@ export const SaveDocumentDialog: React.FC<Props> = ({
                 </MenuItem>
               ))}
             </Select>
+
+            <Box display="flex" justifyContent="end" width="100%">
+              <Button
+                disabled={Boolean(form.vehicleId)}
+                size="small"
+                onClick={() =>
+                  setForm((prev) => ({
+                    ...prev,
+                    officeId: undefined,
+                  }))
+                }
+              >
+                Reset
+              </Button>
+            </Box>
           </FormControl>
 
           <DatePicker
@@ -355,6 +416,20 @@ export const SaveDocumentDialog: React.FC<Props> = ({
               ))}
             </Select>
 
+            <Box display="flex" justifyContent="end" width="100%">
+              <Button
+                size="small"
+                onClick={() =>
+                  setForm((prev) => ({
+                    ...prev,
+                    paymentTypeId: undefined,
+                  }))
+                }
+              >
+                Reset
+              </Button>
+            </Box>
+
             {errors.paymentTypeId && <FormHelperText>Required</FormHelperText>}
           </FormControl>
 
@@ -416,6 +491,20 @@ export const SaveDocumentDialog: React.FC<Props> = ({
                 </MenuItem>
               ))}
             </Select>
+
+            <Box display="flex" justifyContent="end" width="100%">
+              <Button
+                size="small"
+                onClick={() =>
+                  setForm((prev) => ({
+                    ...prev,
+                    descriptionTypeId: undefined,
+                  }))
+                }
+              >
+                Reset
+              </Button>
+            </Box>
 
             {errors.descriptionTypeId && (
               <FormHelperText>Required</FormHelperText>

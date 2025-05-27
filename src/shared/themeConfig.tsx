@@ -136,51 +136,6 @@ export const themeOptions: ThemeOptions = {
         size: 'small',
         variant: 'filled',
       },
-
-      variants: [
-        {
-          props: { size: 'small' },
-          style: {
-            height: '22px',
-            fontSize: '12px',
-            lineHeight: '16px',
-          },
-        },
-        {
-          props: { color: 'primary' },
-          style: {
-            background: COLORS.primaryBlue20,
-          },
-        },
-        {
-          props: { color: 'success' },
-          style: {
-            background: COLORS.teal20,
-          },
-        },
-        {
-          props: { color: 'warning' },
-          style: {
-            background: COLORS.yellow20,
-          },
-        },
-        {
-          props: { color: 'error' },
-          style: {
-            background: COLORS.coral20,
-          },
-        },
-      ],
-
-      styleOverrides: {
-        root: {
-          color: COLORS.primaryBlue90,
-          textTransform: 'uppercase',
-          borderRadius: '2px',
-          fontFamily: 'Neue Haas Unica',
-          fontWeight: 'normal',
-        },
-      },
     },
 
     MuiSelect: {

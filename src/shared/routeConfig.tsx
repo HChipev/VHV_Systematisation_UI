@@ -8,6 +8,7 @@ import { PrivateRoute } from 'src/shared/components/PrivateRoute'
 import { AppWrapper } from 'src/shared/components/AppWrapper'
 import { LoginPage } from 'src/authentication/LoginPage'
 import { DocumentsPage } from 'src/documents/DocumentsPage'
+import { AdminPage } from 'src/admin/AdminPage'
 
 export const routeConfig: RouteObject[] = [
   {
@@ -17,6 +18,10 @@ export const routeConfig: RouteObject[] = [
       {
         index: true,
         element: <DocumentsPage />,
+      },
+      {
+        path: ROUTES.ADMIN_ROUTE,
+        element: <AdminPage />,
       },
     ],
   },

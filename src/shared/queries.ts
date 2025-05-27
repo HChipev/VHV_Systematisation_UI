@@ -1,4 +1,6 @@
 import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
+import { ResourceTypeRequestQuery } from 'src/admin/components/types/types'
+import { UserRequestQuery } from 'src/admin/types'
 import {
   SavedDocumentRequestQuery,
   ScannedDocumentRequestQuery,
@@ -18,6 +20,18 @@ export const useUserRoles = () =>
   useQuery({
     queryKey: ['userRoles'],
     queryFn: apiCalls.getUserRoles,
+  })
+
+export const useUsers = (paginationQuery: UserRequestQuery) =>
+  useSuspenseQuery({
+    queryKey: ['users', paginationQuery],
+    queryFn: () => apiCalls.getUsers(paginationQuery),
+  })
+
+export const useRoles = () =>
+  useQuery({
+    queryKey: ['roles'],
+    queryFn: apiCalls.getRoles,
   })
 
 // DOCUMENTS
@@ -70,4 +84,60 @@ export const useOffices = () =>
   useSuspenseQuery({
     queryKey: ['offices'],
     queryFn: apiCalls.getOffices,
+  })
+
+export const usePaginatedDocumentTypes = (
+  paginationQuery: ResourceTypeRequestQuery
+) =>
+  useQuery({
+    queryKey: ['paginatedDocumentTypes'],
+    queryFn: () => apiCalls.getPaginatedDocumentTypes(paginationQuery),
+  })
+
+export const usePaginatedDescriptionTypes = (
+  paginationQuery: ResourceTypeRequestQuery
+) =>
+  useQuery({
+    queryKey: ['paginatedDescriptionTypes'],
+    queryFn: () => apiCalls.getPaginatedDescriptionTypes(paginationQuery),
+  })
+
+export const usePaginatedExpenseTypes = (
+  paginationQuery: ResourceTypeRequestQuery
+) =>
+  useQuery({
+    queryKey: ['paginatedExpenseTypes'],
+    queryFn: () => apiCalls.getPaginatedExpenseTypes(paginationQuery),
+  })
+
+export const usePaginatedPaymentTypes = (
+  paginationQuery: ResourceTypeRequestQuery
+) =>
+  useQuery({
+    queryKey: ['paginatedPaymentTypes'],
+    queryFn: () => apiCalls.getPaginatedPaymentTypes(paginationQuery),
+  })
+
+export const usePaginatedVehicles = (
+  paginationQuery: ResourceTypeRequestQuery
+) =>
+  useQuery({
+    queryKey: ['paginatedVehicles'],
+    queryFn: () => apiCalls.getPaginatedVehicles(paginationQuery),
+  })
+
+export const usePaginatedOffices = (
+  paginationQuery: ResourceTypeRequestQuery
+) =>
+  useQuery({
+    queryKey: ['paginatedOffices'],
+    queryFn: () => apiCalls.getPaginatedOffices(paginationQuery),
+  })
+
+// HEALTHCHECK
+export const useHealthcheck = () =>
+  useQuery({
+    queryKey: ['healthcheck'],
+    queryFn: apiCalls.getHealthcheck,
+    throwOnError: false,
   })

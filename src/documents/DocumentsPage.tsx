@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { enqueueSnackbar } from 'notistack'
 import { useQueryClient } from '@tanstack/react-query'
+import { useDispatch } from 'react-redux'
 
 // UTILS
 import { useAddSavedDocument } from 'src/shared/mutations'
@@ -16,9 +17,13 @@ import { SaveDocumentDialog } from 'src/documents/components/SaveDocumentDialog'
 // TYPES & CONSTANTS
 import { DocumentTabs } from 'src/documents/types'
 import { SCANNED_DOCUMENTS_QUERY_KEY } from 'src/shared/queryKeys'
+import { actions as scanActions } from 'src/documents/scanned/scanDocumentFiltersActions'
+import { actions as savedActions } from 'src/documents/saved/savedDocumentFiltersActions'
 
 export const DocumentsPage: React.FC = () => {
   const theme = useTheme()
+
+  const dispatch = useDispatch()
 
   const queryClient = useQueryClient()
 
@@ -52,19 +57,24 @@ export const DocumentsPage: React.FC = () => {
       padding={theme.spacing(3)}
       gap={theme.spacing(2)}
     >
-      <Box display="flex" width={theme.breakpoints.values.xs}>
+      <Box display="flex" maxWidth="100%">
         <Tabs
           value={tab}
-          onChange={(_, value: DocumentTabs) => setTab(value)}
+          onChange={(_, value: DocumentTabs) => {
+            setTab(value)
+            dispatch(scanActions.setScanDocumentFilters({}))
+            dispatch(savedActions.setSavedDocumentFilters({}))
+          }}
           centered
-          variant="fullWidth"
+          variant="scrollable"
+          scrollButtons="auto"
+          slotProps={{
+            list: { style: { width: 'fit-content' } },
+          }}
         >
-          <Tab
-            value={DocumentTabs.ScannedDocuments}
-            label="Scanned Documents"
-          />
-
-          <Tab value={DocumentTabs.SavedDocuments} label="Saved Documents" />
+          {Object.values(DocumentTabs).map((tabValue) => (
+            <Tab key={tabValue} value={tabValue} label={tabValue} />
+          ))}
         </Tabs>
       </Box>
 

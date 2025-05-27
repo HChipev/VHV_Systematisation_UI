@@ -26,3 +26,10 @@ export interface PaginationRequest {
   page: number
   pageSize: number
 }
+
+export interface User {
+  id: number
+  roles: Roles[]
+  email: string
+  createdDateTime: Date
+}
