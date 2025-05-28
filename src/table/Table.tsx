@@ -42,11 +42,18 @@ export const Table: React.FC<Props> = (props) => {
         {tableHeader}
       </Typography>
 
-      {genericHeaderActionComponent}
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+        gap={theme.spacing(2)}
+      >
+        {genericHeaderActionComponent}
 
-      {filtersComponent && (
-        <TableFiltersMenu>{filtersComponent}</TableFiltersMenu>
-      )}
+        {filtersComponent && (
+          <TableFiltersMenu>{filtersComponent}</TableFiltersMenu>
+        )}
+      </Box>
     </Box>
   )
 

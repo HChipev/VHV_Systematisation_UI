@@ -18,6 +18,8 @@ import { SavedDocumentsFilters } from 'src/table/components/SavedDocumentsFilter
 // TYPES & CONSTANTS
 import { columns } from 'src/documents/saved/columns'
 import { GridSortModel } from '@mui/x-data-grid'
+import { PaginationMetadataBase } from 'src/shared/types'
+import { SavedDocument } from 'src/documents/types'
 
 interface Props {
   onPreviewFile: (file: string) => void
@@ -31,9 +33,7 @@ export const SavedDocumentsTable: React.FC<Props> = ({ onPreviewFile }) => {
   const [paginationRequest, setPaginationRequest] = usePagination()
   const [tableSort, setTableSort] = React.useState<GridSortModel>([])
 
-  const {
-    data: { items, metadata },
-  } = useSavedDocuments({
+  const { data, isLoading } = useSavedDocuments({
     page: paginationRequest.page,
     pageSize: paginationRequest.pageSize,
     sortBy: tableSort[0]?.field,
@@ -63,9 +63,17 @@ export const SavedDocumentsTable: React.FC<Props> = ({ onPreviewFile }) => {
     description: tableFilters.description,
   })
 
+  let items: SavedDocument[] = []
+  let metadata: PaginationMetadataBase = { page: 1, pageSize: 10, count: 0 }
+
+  if (data) {
+    ;({ items, metadata } = data)
+  }
+
   return (
     <Table
       tableHeader="Saved Documents"
+      loading={isLoading}
       filtersComponent={
         <SavedDocumentsFilters
           filters={tableFilters}

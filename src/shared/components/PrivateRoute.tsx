@@ -32,5 +32,5 @@ export const PrivateRoute: React.FC<PrivateRouteProps> = ({ Component }) => {
     sessionStorage.removeItem(SESSION_STORAGE_TOKEN_KEY)
   }
 
-  return token ? <Component /> : <Navigate to={ROUTES.LOGIN_ROUTE} />
+  return token ? <Component /> : <Navigate to={ROUTES.LOGIN_ROUTE} replace />
 }

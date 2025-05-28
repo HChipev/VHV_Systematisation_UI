@@ -14,8 +14,6 @@ export interface ScannedDocument {
   file: string
 }
 
-export type ScannedDocumentsResponse = ScannedDocument[]
-
 export interface SavedDocument {
   id: number
   issuedDate: Date
@@ -60,8 +58,6 @@ export interface SavedDocumentRequest {
   description: string
   scannedDocumentId: number
 }
-
-export type SavedDocumentsResponse = SavedDocument[]
 
 export interface ResourceType {
   id: number

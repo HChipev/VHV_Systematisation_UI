@@ -1,9 +1,12 @@
 // COMPONENTS
+import { Box, Button } from '@mui/material'
 
 // ICONS
+import { DeleteOutline, EditOutlined } from '@mui/icons-material'
 
 // TYPES & CONSTANTS
-import { GridColDef } from '@mui/x-data-grid/models'
+import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid/models'
+import { ResourceType as ResourceTypeModel } from 'src/documents/types'
 
 enum ResourceType {
   Id = 'id',
@@ -12,7 +15,10 @@ enum ResourceType {
   Actions = 'actions',
 }
 
-export const columns: GridColDef[] = [
+export const columns: (
+  onUpdate: (id: number, name: string, description: string) => void,
+  onDelete: (id: number, name: string, description: string) => void
+) => GridColDef[] = (onUpdate, onDelete) => [
   {
     field: ResourceType.Id,
     type: 'string',
@@ -41,43 +47,36 @@ export const columns: GridColDef[] = [
     sortable: false,
     filterable: false,
     resizable: false,
-    renderCell: () => (
-      <></>
-      // <Box display="flex" justifyContent="space-between" width="100%" gap={1}>
-      //   <Button
-      //     fullWidth
-      //     variant="outlined"
-      //     startIcon={<PictureAsPdfIcon />}
-      //     onClick={() => {
-      //       const {
-      //         row: { file },
-      //       } = params
-      //       if (!file) {
-      //         return
-      //       }
+    renderCell: (params: GridRenderCellParams<ResourceTypeModel>) => (
+      <Box display="flex" justifyContent="space-around" width="100%" gap={1}>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={() => {
+            const {
+              row: { id, name, description },
+            } = params
 
-      //       onPreviewPdf(file)
-      //     }}
-      //   >
-      //     Preview
-      //   </Button>
+            onUpdate(id, name, description)
+          }}
+        >
+          <EditOutlined />
+        </Button>
 
-      //   <Button
-      //     fullWidth
-      //     variant="contained"
-      //     color="primary"
-      //     startIcon={<SaveIcon />}
-      //     onClick={() => {
-      //       const {
-      //         row: { id },
-      //       } = params
+        <Button
+          variant="outlined"
+          color="error"
+          onClick={() => {
+            const {
+              row: { id, name, description },
+            } = params
 
-      //       onSaveFile(Number(id))
-      //     }}
-      //   >
-      //     Save
-      //   </Button>
-      // </Box>
+            onDelete(id, name, description)
+          }}
+        >
+          <DeleteOutline />
+        </Button>
+      </Box>
     ),
     width: 160,
   },

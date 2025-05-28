@@ -59,36 +59,42 @@ export const SaveDocumentDialog: React.FC<Props> = ({
   const { data: vehicles } = useVehicles()
   const { data: offices } = useOffices()
 
-  const documentTypeOptions = documentTypes.map((type) => ({
-    label: type.name,
-    value: type.id,
-    description: type.description,
-  }))
-  const descriptionTypeOptions = descriptionTypes.map((type) => ({
-    label: type.name,
-    value: type.id,
-    description: type.description,
-  }))
-  const expenseTypeOptions = expenseTypes.map((type) => ({
-    label: type.name,
-    value: type.id,
-    description: type.description,
-  }))
-  const paymentTypeOptions = paymentTypes.map((type) => ({
-    label: type.name,
-    value: type.id,
-    description: type.description,
-  }))
-  const vehicleOptions = vehicles.map((vehicle) => ({
-    label: vehicle.name,
-    value: vehicle.id,
-    description: vehicle.description,
-  }))
-  const officeOptions = offices.map((office) => ({
-    label: office.name,
-    value: office.id,
-    description: office.description,
-  }))
+  const documentTypeOptions =
+    documentTypes?.map((type) => ({
+      label: type.name,
+      value: type.id,
+      description: type.description,
+    })) ?? []
+  const descriptionTypeOptions =
+    descriptionTypes?.map((type) => ({
+      label: type.name,
+      value: type.id,
+      description: type.description,
+    })) ?? []
+  const expenseTypeOptions =
+    expenseTypes?.map((type) => ({
+      label: type.name,
+      value: type.id,
+      description: type.description,
+    })) ?? []
+  const paymentTypeOptions =
+    paymentTypes?.map((type) => ({
+      label: type.name,
+      value: type.id,
+      description: type.description,
+    })) ?? []
+  const vehicleOptions =
+    vehicles?.map((vehicle) => ({
+      label: vehicle.name,
+      value: vehicle.id,
+      description: vehicle.description,
+    })) ?? []
+  const officeOptions =
+    offices?.map((office) => ({
+      label: office.name,
+      value: office.id,
+      description: office.description,
+    })) ?? []
 
   const [form, setForm] = React.useState<Partial<SavedDocumentRequest>>({})
   const [errors, setErrors] = React.useState<
@@ -139,6 +145,7 @@ export const SaveDocumentDialog: React.FC<Props> = ({
         counterpartyName: !form.counterpartyName,
         descriptionTypeId: !form.descriptionTypeId,
       })
+
       return
     }
 

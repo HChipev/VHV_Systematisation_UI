@@ -18,6 +18,8 @@ import { ScannedDocumentsFilters } from 'src/table/components/ScannedDocumentsFi
 // TYPES & CONSTANTS
 import { columns } from 'src/documents/scanned/columns'
 import { GridSortModel } from '@mui/x-data-grid'
+import { ScannedDocument } from 'src/documents/types'
+import { PaginationMetadataBase } from 'src/shared/types'
 
 interface Props {
   onPreviewFile: (file: string) => void
@@ -35,9 +37,7 @@ export const ScannedDocumentsTable: React.FC<Props> = ({
   const [paginationRequest, setPaginationRequest] = usePagination()
   const [tableSort, setTableSort] = React.useState<GridSortModel>([])
 
-  const {
-    data: { items, metadata },
-  } = useScannedDocuments({
+  const { data, isLoading } = useScannedDocuments({
     page: paginationRequest.page,
     pageSize: paginationRequest.pageSize,
     sortBy: tableSort[0]?.field,
@@ -47,9 +47,17 @@ export const ScannedDocumentsTable: React.FC<Props> = ({
     name: tableFilters.name,
   })
 
+  let items: ScannedDocument[] = []
+  let metadata: PaginationMetadataBase = { page: 1, pageSize: 10, count: 0 }
+
+  if (data) {
+    ;({ items, metadata } = data)
+  }
+
   return (
     <Table
       tableHeader="Scanned Documents"
+      loading={isLoading}
       filtersComponent={
         <ScannedDocumentsFilters
           filters={tableFilters}

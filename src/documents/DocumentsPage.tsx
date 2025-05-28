@@ -65,7 +65,6 @@ export const DocumentsPage: React.FC = () => {
             dispatch(scanActions.setScanDocumentFilters({}))
             dispatch(savedActions.setSavedDocumentFilters({}))
           }}
-          centered
           variant="scrollable"
           scrollButtons="auto"
           slotProps={{

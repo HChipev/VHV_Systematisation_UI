@@ -116,7 +116,7 @@ export const Sidebar: React.FC = () => {
                   onSuccess: () => {
                     dispatch(actions.setUserRoles([]))
                     sessionStorage.removeItem(SESSION_STORAGE_TOKEN_KEY)
-                    navigate(ROUTES.LOGIN_ROUTE)
+                    navigate(ROUTES.LOGIN_ROUTE, { replace: true })
                     enqueueSnackbar('Logged out successfully', {
                       variant: 'success',
                     })
