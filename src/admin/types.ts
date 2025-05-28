@@ -10,6 +10,7 @@ export enum AdminTabs {
   Offices = 'Offices',
   DescriptionTypes = 'DescriptionTypes',
   PaymentTypes = 'PaymentTypes',
+  ScanPath = 'ScanPath',
 }
 
 export interface UserRequestQuery extends PaginationRequest {
@@ -28,4 +29,8 @@ export interface UserFilters {
   roles?: Roles[]
   startCreatedDateTime?: Date
   endCreatedDateTime?: Date
+}
+
+export interface ScanPath {
+  path: string
 }

@@ -73,7 +73,7 @@ export const themeOptions: ThemeOptions = {
           minWidth: 0,
           textTransform: 'none',
           fontWeight: 'normal',
-          fontFamily: 'Neue Haas Unica',
+          fontFamily: 'Inter',
           padding: 0,
           minHeight: '40px',
           lineHeight: '20px',

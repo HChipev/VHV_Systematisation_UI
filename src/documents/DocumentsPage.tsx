@@ -19,6 +19,7 @@ import { DocumentTabs } from 'src/documents/types'
 import { SCANNED_DOCUMENTS_QUERY_KEY } from 'src/shared/queryKeys'
 import { actions as scanActions } from 'src/documents/scanned/scanDocumentFiltersActions'
 import { actions as savedActions } from 'src/documents/saved/savedDocumentFiltersActions'
+import { DocumentTabsToTextMap } from 'src/documents/strategyMaps'
 
 export const DocumentsPage: React.FC = () => {
   const theme = useTheme()
@@ -72,7 +73,11 @@ export const DocumentsPage: React.FC = () => {
           }}
         >
           {Object.values(DocumentTabs).map((tabValue) => (
-            <Tab key={tabValue} value={tabValue} label={tabValue} />
+            <Tab
+              key={tabValue}
+              value={tabValue}
+              label={DocumentTabsToTextMap[tabValue]}
+            />
           ))}
         </Tabs>
       </Box>

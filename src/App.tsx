@@ -1,6 +1,11 @@
 import * as React from 'react'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import {
+  MutationCache,
+  QueryCache,
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
 import { SnackbarProvider } from 'notistack'
 import { Provider } from 'react-redux'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
@@ -47,6 +52,24 @@ const queryClient = new QueryClient({
       },
     },
   },
+  mutationCache: new MutationCache({
+    onError: (error: Error) => {
+      const axiosError = error as AxiosError
+
+      if (axiosError.response?.status === 403) {
+        window.history.back()
+      }
+    },
+  }),
+  queryCache: new QueryCache({
+    onError: (error: Error) => {
+      const axiosError = error as AxiosError
+
+      if (axiosError.response?.status === 403) {
+        window.history.back()
+      }
+    },
+  }),
 })
 
 export const App: React.FC = () => (

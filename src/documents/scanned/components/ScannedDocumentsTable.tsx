@@ -48,7 +48,7 @@ export const ScannedDocumentsTable: React.FC<Props> = ({
   })
 
   let items: ScannedDocument[] = []
-  let metadata: PaginationMetadataBase = { page: 1, pageSize: 10, count: 0 }
+  let metadata: PaginationMetadataBase = { page: 1, pageSize: 25, count: 0 }
 
   if (data) {
     ;({ items, metadata } = data)

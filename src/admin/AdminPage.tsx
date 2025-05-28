@@ -1,9 +1,6 @@
 import * as React from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 import { enqueueSnackbar } from 'notistack'
 import { useQueryClient } from '@tanstack/react-query'
-import isEmpty from 'lodash-es/isEmpty'
 
 // UTILS
 import { handleApiError } from 'src/shared/utils'
@@ -30,19 +27,15 @@ import {
   useUpdateVehicle,
 } from 'src/shared/mutations'
 
-// SELECTORS
-import { getUserRoles } from 'src/shared/userSelectors'
-
 // COMPONENTS
 import { Box, Tabs, Tab, useTheme } from '@mui/material'
 import { UsersTable } from 'src/admin/components/users/UsersTable'
 import { ResourceTypeTable } from 'src/admin/components/types/ResourceTypeTable'
 import { AddResourceTypeActionComponent } from 'src/admin/components/types/AddResourceTypeActionComponent'
+import { ScanPathPage } from 'src/admin/components/scan-path/ScanPathPage'
 
 // TYPES & CONSTANTS
 import { AdminTabs } from 'src/admin/types'
-import { Roles } from 'src/shared/types'
-import { ROUTES } from 'src/shared/routes'
 import {
   usePaginatedDescriptionTypes,
   usePaginatedDocumentTypes,
@@ -60,6 +53,7 @@ import {
   PAGINATED_VEHICLES_QUERY_KEY,
   USERS_QUERY_KEY,
 } from 'src/shared/queryKeys'
+import { AdminTabsToTextMap } from 'src/admin/strategyMaps'
 
 export const AdminPage: React.FC = () => {
   const queryClient = useQueryClient()
@@ -82,21 +76,6 @@ export const AdminPage: React.FC = () => {
 
   const { mutate: updateUser } = useUpdateUser()
   const { mutate: deleteUser } = useDeleteUser()
-
-  const userRoles = useSelector(getUserRoles)
-
-  const navigate = useNavigate()
-
-  React.useEffect(() => {
-    if (isEmpty(userRoles)) {
-      navigate(ROUTES.LOGIN_ROUTE)
-      return
-    }
-
-    if (!userRoles.includes(Roles.Admin)) {
-      navigate(ROUTES.HOMEPAGE_ROUTE)
-    }
-  }, [userRoles, navigate])
 
   const [tab, setTab] = React.useState(AdminTabs.Users)
 
@@ -123,7 +102,11 @@ export const AdminPage: React.FC = () => {
           }}
         >
           {Object.values(AdminTabs).map((tabValue) => (
-            <Tab key={tabValue} value={tabValue} label={tabValue} />
+            <Tab
+              key={tabValue}
+              value={tabValue}
+              label={AdminTabsToTextMap[tabValue]}
+            />
           ))}
         </Tabs>
       </Box>
@@ -468,6 +451,8 @@ export const AdminPage: React.FC = () => {
             }}
           />
         )}
+
+        {tab === AdminTabs.ScanPath && <ScanPathPage />}
       </Box>
     </Box>
   )

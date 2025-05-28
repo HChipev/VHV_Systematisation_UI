@@ -18,6 +18,7 @@ import {
   PAGINATED_PAYMENT_TYPES_QUERY_KEY,
   PAGINATED_VEHICLES_QUERY_KEY,
   SAVED_DOCUMENTS_QUERY_KEY,
+  SCAN_PATH_QUERY_KEY,
   SCANNED_DOCUMENTS_QUERY_KEY,
   USERS_QUERY_KEY,
 } from 'src/shared/queryKeys'
@@ -148,4 +149,11 @@ export const useHealthcheck = () =>
     queryKey: ['healthcheck'],
     queryFn: apiCalls.getHealthcheck,
     throwOnError: false,
+  })
+
+// SCAN PATHS
+export const useScanPath = () =>
+  useQuery({
+    queryKey: [SCAN_PATH_QUERY_KEY],
+    queryFn: apiCalls.getScanPath,
   })

@@ -18,7 +18,7 @@ import {
   User,
 } from 'src/shared/types'
 import { createQueryString } from 'src/shared/apiCallsUtils'
-import { UserRequestQuery } from 'src/admin/types'
+import { ScanPath, UserRequestQuery } from 'src/admin/types'
 import {
   ResourceTypeModelRequest,
   ResourceTypeRequestQuery,
@@ -303,6 +303,20 @@ const getHealthcheck = () =>
     method: 'GET',
   }).then((response) => response.data)
 
+// SCAN PATHS
+const getScanPath = () =>
+  call<ScanPath>({
+    url: '/scan-paths',
+    method: 'GET',
+  }).then((response) => response.data)
+
+const updateScanPath = (data: ScanPath) =>
+  call<void>({
+    url: '/scan-paths',
+    method: 'PUT',
+    data,
+  }).then((response) => response.data)
+
 export const apiCalls = {
   login,
   logout,
@@ -346,4 +360,6 @@ export const apiCalls = {
   deletePaymentType,
   updateUser,
   deleteUser,
+  getScanPath,
+  updateScanPath,
 }

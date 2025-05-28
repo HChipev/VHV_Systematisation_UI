@@ -73,12 +73,23 @@ export const Sidebar: React.FC = () => {
             gap={theme.spacing(3)}
             bgcolor="inherit"
           >
-            {/* //TODO: Add logo component */}
+            <Box display="flex" flexDirection="column">
+              <img
+                src="src/assets/logo.svg"
+                alt="App Logo"
+                style={{
+                  height: `${isCollapsed ? '60px' : '90px'}`,
+                  width: '100%',
+                  transition: 'width 0.2s',
+                  objectFit: 'cover',
+                }}
+              />
 
-            <CollapseLink
-              isSidebarCollapsed={isCollapsed}
-              setIsCollapsed={setIsCollapsed}
-            />
+              <CollapseLink
+                isSidebarCollapsed={isCollapsed}
+                setIsCollapsed={setIsCollapsed}
+              />
+            </Box>
 
             <StyledList disablePadding>
               {SIDE_BAR_ROUTES.map(({ text, route, icon, requiredRoles }) => {

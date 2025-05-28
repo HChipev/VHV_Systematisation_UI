@@ -11,6 +11,7 @@ import {
   AddUserRequest,
   UpdateUserRequest,
 } from 'src/admin/components/users/types'
+import { ScanPath } from 'src/admin/types'
 
 // AUTHENTICATION
 export const useLogin = () =>
@@ -199,4 +200,11 @@ export const useDeletePaymentType = () =>
   useMutation({
     mutationKey: ['deletePaymentType'],
     mutationFn: (id: number) => apiCalls.deletePaymentType(id),
+  })
+
+// SCAN PATHS
+export const useUpdateScanPath = () =>
+  useMutation({
+    mutationKey: ['scanPath'],
+    mutationFn: (data: ScanPath) => apiCalls.updateScanPath(data),
   })
