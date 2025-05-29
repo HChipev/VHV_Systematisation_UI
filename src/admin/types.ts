@@ -8,6 +8,7 @@ export enum AdminTabs {
   ExpenseTypes = 'ExpenseTypes',
   Vehicles = 'Vehicles',
   Offices = 'Offices',
+  Personnel = 'Personnel',
   DescriptionTypes = 'DescriptionTypes',
   PaymentTypes = 'PaymentTypes',
   ScanPath = 'ScanPath',

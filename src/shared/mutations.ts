@@ -202,6 +202,30 @@ export const useDeletePaymentType = () =>
     mutationFn: (id: number) => apiCalls.deletePaymentType(id),
   })
 
+export const useAddEmployee = () =>
+  useMutation({
+    mutationKey: ['addEmployee'],
+    mutationFn: (data: ResourceTypeModelRequest) => apiCalls.addEmployee(data),
+  })
+
+export const useUpdateEmployee = () =>
+  useMutation({
+    mutationKey: ['updateEmployee'],
+    mutationFn: ({
+      id,
+      data,
+    }: {
+      id: number
+      data: ResourceTypeModelRequest
+    }) => apiCalls.updateEmployee(id, data),
+  })
+
+export const useDeleteEmployee = () =>
+  useMutation({
+    mutationKey: ['deleteEmployee'],
+    mutationFn: (id: number) => apiCalls.deleteEmployee(id),
+  })
+
 // SCAN PATHS
 export const useUpdateScanPath = () =>
   useMutation({

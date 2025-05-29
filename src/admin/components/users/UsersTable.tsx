@@ -80,8 +80,8 @@ export const UsersTable: React.FC<Props> = ({ onUpdate, onDelete }) => {
         }
         rows={items}
         columns={columns(
-          (id, email, roles) => {
-            setUser({ id, email, roles })
+          (id, email, roles, userName) => {
+            setUser({ id, email, roles, userName })
             setIsUpdateDialogOpen(true)
           },
           (id, email) => {

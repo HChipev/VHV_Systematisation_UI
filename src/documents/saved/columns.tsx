@@ -32,6 +32,7 @@ enum SavedDocumentColumns {
   CounterpartyBulstat = 'counterpartyBulstat',
   DescriptionType = 'descriptionType',
   Description = 'description',
+  Employee = 'employee',
 }
 
 export const columns: (onPreviewPdf: (file: string) => void) => GridColDef[] = (
@@ -100,6 +101,14 @@ export const columns: (onPreviewPdf: (file: string) => void) => GridColDef[] = (
   {
     field: SavedDocumentColumns.Office,
     headerName: 'Office',
+    type: 'string',
+    width: 130,
+    valueFormatter: (value: string) => (value ? value : 'N/A'),
+    resizable: false,
+  },
+  {
+    field: SavedDocumentColumns.Employee,
+    headerName: 'Personnel',
     type: 'string',
     width: 130,
     valueFormatter: (value: string) => (value ? value : 'N/A'),

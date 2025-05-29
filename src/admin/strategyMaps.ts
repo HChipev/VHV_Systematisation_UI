@@ -10,4 +10,5 @@ export const AdminTabsToTextMap: Record<AdminTabs, string> = {
   [AdminTabs.DescriptionTypes]: 'Description Types',
   [AdminTabs.PaymentTypes]: 'Payment Types',
   [AdminTabs.ScanPath]: 'Scan Path',
+  [AdminTabs.Personnel]: 'Personnel',
 }

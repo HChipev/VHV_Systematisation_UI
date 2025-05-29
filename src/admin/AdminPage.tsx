@@ -7,12 +7,14 @@ import { handleApiError } from 'src/shared/utils'
 import {
   useAddDescriptionType,
   useAddDocumentType,
+  useAddEmployee,
   useAddExpenseType,
   useAddOffice,
   useAddPaymentType,
   useAddVehicle,
   useDeleteDescriptionType,
   useDeleteDocumentType,
+  useDeleteEmployee,
   useDeleteExpenseType,
   useDeleteOffice,
   useDeletePaymentType,
@@ -20,6 +22,7 @@ import {
   useDeleteVehicle,
   useUpdateDescriptionType,
   useUpdateDocumentType,
+  useUpdateEmployee,
   useUpdateExpenseType,
   useUpdateOffice,
   useUpdatePaymentType,
@@ -39,6 +42,7 @@ import { AdminTabs } from 'src/admin/types'
 import {
   usePaginatedDescriptionTypes,
   usePaginatedDocumentTypes,
+  usePaginatedEmployees,
   usePaginatedExpenseTypes,
   usePaginatedOffices,
   usePaginatedPaymentTypes,
@@ -47,6 +51,7 @@ import {
 import {
   PAGINATED_DESCRIPTION_TYPES_QUERY_KEY,
   PAGINATED_DOCUMENT_TYPES_QUERY_KEY,
+  PAGINATED_EMPLOYEES_QUERY_KEY,
   PAGINATED_EXPENSE_TYPES_QUERY_KEY,
   PAGINATED_OFFICES_QUERY_KEY,
   PAGINATED_PAYMENT_TYPES_QUERY_KEY,
@@ -66,6 +71,7 @@ export const AdminPage: React.FC = () => {
   const { mutate: updateOffice } = useUpdateOffice()
   const { mutate: updateVehicle } = useUpdateVehicle()
   const { mutate: updatePaymentType } = useUpdatePaymentType()
+  const { mutate: updateEmployee } = useUpdateEmployee()
 
   const { mutate: deleteDocumentType } = useDeleteDocumentType()
   const { mutate: deleteDescriptionType } = useDeleteDescriptionType()
@@ -73,6 +79,7 @@ export const AdminPage: React.FC = () => {
   const { mutate: deleteOffice } = useDeleteOffice()
   const { mutate: deleteVehicle } = useDeleteVehicle()
   const { mutate: deletePaymentType } = useDeletePaymentType()
+  const { mutate: deleteEmployee } = useDeleteEmployee()
 
   const { mutate: updateUser } = useUpdateUser()
   const { mutate: deleteUser } = useDeleteUser()
@@ -391,6 +398,56 @@ export const AdminPage: React.FC = () => {
                   })
 
                   enqueueSnackbar('Vehicle deleted successfully', {
+                    variant: 'success',
+                  })
+
+                  onSuccess()
+                },
+                onError: handleApiError,
+              })
+            }}
+          />
+        )}
+
+        {tab === AdminTabs.Personnel && (
+          <ResourceTypeTable
+            useQuery={usePaginatedEmployees}
+            tableHeader="Personnel"
+            genericHeaderActionComponent={
+              <AddResourceTypeActionComponent
+                resourceName="Personnel"
+                useMutation={useAddEmployee}
+                queryKey={PAGINATED_EMPLOYEES_QUERY_KEY}
+              />
+            }
+            resourceName="Employee"
+            onUpdate={(id, data, onSuccess) => {
+              updateEmployee(
+                { id, data },
+                {
+                  onSuccess() {
+                    queryClient.invalidateQueries({
+                      queryKey: [PAGINATED_EMPLOYEES_QUERY_KEY],
+                    })
+
+                    enqueueSnackbar('Personnel updated successfully', {
+                      variant: 'success',
+                    })
+
+                    onSuccess()
+                  },
+                  onError: handleApiError,
+                }
+              )
+            }}
+            onDelete={(id, onSuccess) => {
+              deleteEmployee(id, {
+                onSuccess() {
+                  queryClient.invalidateQueries({
+                    queryKey: [PAGINATED_EMPLOYEES_QUERY_KEY],
+                  })
+
+                  enqueueSnackbar('Personnel deleted successfully', {
                     variant: 'success',
                   })
 

@@ -5,6 +5,7 @@ import { format } from 'date-fns'
 import {
   useDescriptionTypes,
   useDocumentTypes,
+  useEmployees,
   useExpenseTypes,
   useOffices,
   usePaymentTypes,
@@ -45,6 +46,7 @@ export const SavedDocumentsFilters: React.FC<Props> = ({
   const { data: paymentTypes } = usePaymentTypes()
   const { data: vehicles } = useVehicles()
   const { data: offices } = useOffices()
+  const { data: employees } = useEmployees()
 
   const documentTypeOptions =
     documentTypes?.map((type) => ({
@@ -82,6 +84,12 @@ export const SavedDocumentsFilters: React.FC<Props> = ({
       value: office.id,
       description: office.description,
     })) ?? []
+  const employeeOptions =
+    employees?.map((employee) => ({
+      label: employee.name,
+      value: employee.id,
+      description: employee.description,
+    })) ?? []
 
   const [startCreatedDateTime, setStartCreatedDateTime] =
     React.useState<Date | null>(filters?.startCreatedDateTime ?? null)
@@ -107,6 +115,9 @@ export const SavedDocumentsFilters: React.FC<Props> = ({
   )
   const [office, setOffice] = React.useState<string | null>(
     filters?.office ?? null
+  )
+  const [employee, setEmployee] = React.useState<string | null>(
+    filters?.employee ?? null
   )
   const [startPeriodStartDate, setStartPeriodStartDate] =
     React.useState<Date | null>(filters?.startPeriodStartDate ?? null)
@@ -172,6 +183,7 @@ export const SavedDocumentsFilters: React.FC<Props> = ({
       counterpartyBulstat: counterpartyBulstat ?? undefined,
       descriptionType: descriptionType ?? undefined,
       description: description ?? undefined,
+      employee: employee ?? undefined,
     })
   }
 
@@ -381,6 +393,33 @@ export const SavedDocumentsFilters: React.FC<Props> = ({
             onChange={(e) => setOffice(e.target.value)}
           >
             {officeOptions.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {`${option.label}(${option.description})`}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Box>
+
+      <Box
+        display="flex"
+        flexDirection="column"
+        width="100%"
+        gap={theme.spacing(1)}
+      >
+        <Typography variant="body2">Personnel</Typography>
+
+        <FormControl fullWidth>
+          <InputLabel id="personnel-label">Personnel</InputLabel>
+
+          <Select
+            labelId="personnel-label"
+            name="employeeId"
+            value={employee}
+            label="Personnel"
+            onChange={(e) => setEmployee(e.target.value)}
+          >
+            {employeeOptions.map((option) => (
               <MenuItem key={option.value} value={option.value}>
                 {`${option.label}(${option.description})`}
               </MenuItem>

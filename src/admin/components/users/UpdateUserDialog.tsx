@@ -2,7 +2,7 @@ import * as React from 'react'
 import { enqueueSnackbar } from 'notistack'
 
 // UTILS
-import { useRoles } from 'src/shared/queries'
+import { useEmployees, useRoles } from 'src/shared/queries'
 
 // COMPONENTS
 import {
@@ -46,8 +46,10 @@ export const UpdateUserDialog: React.FC<Props> = ({
   const theme = useTheme()
 
   const { data: roleOptions } = useRoles()
+  const { data: userNameOptions } = useEmployees()
 
   const [password, setPassword] = React.useState('')
+  const [userName, setUserName] = React.useState(user.userName || '')
   const [roles, setRoles] = React.useState(user.roles)
   const [isPasswordVisible, setIsPasswordVisible] = React.useState(false)
   const [errors, setErrors] = React.useState<
@@ -62,9 +64,10 @@ export const UpdateUserDialog: React.FC<Props> = ({
       return
     }
 
-    if (!roles || roles.length === 0) {
+    if (!roles || roles.length === 0 || !userName) {
       setErrors({
         roles: !roles || roles.length === 0,
+        userName: !userName,
       })
 
       enqueueSnackbar('Please select at least one role', {
@@ -73,7 +76,7 @@ export const UpdateUserDialog: React.FC<Props> = ({
 
       return
     }
-    onUpdate(user.id, { password, roles })
+    onUpdate(user.id, { password, roles, userName })
   }
 
   return (
@@ -121,6 +124,31 @@ export const UpdateUserDialog: React.FC<Props> = ({
               },
             }}
           />
+
+          <FormControl fullWidth error={Boolean(errors.userName)} required>
+            <InputLabel id="user-name-label">User Name</InputLabel>
+
+            <Select
+              labelId="user-name-label"
+              value={userName}
+              label="User Name"
+              onChange={(event) => setUserName(event.target.value)}
+            >
+              {userNameOptions?.map((option) => (
+                <MenuItem key={option.name} value={option.name}>
+                  {`${option.name}(${option.description})`}
+                </MenuItem>
+              ))}
+            </Select>
+
+            <Box display="flex" justifyContent="end" width="100%">
+              <Button size="small" onClick={() => setUserName('')}>
+                Reset
+              </Button>
+            </Box>
+
+            {errors.userName && <FormHelperText>Required</FormHelperText>}
+          </FormControl>
 
           <Box
             display="flex"

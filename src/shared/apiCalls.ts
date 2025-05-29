@@ -296,6 +296,38 @@ const deletePaymentType = (id: number) =>
     method: 'DELETE',
   }).then((response) => response.data)
 
+const getEmployees = () =>
+  call<ResourceTypeResponse>({
+    url: '/employees',
+    method: 'GET',
+  }).then((response) => response.data)
+
+const getPaginatedEmployees = (paginationQuery: ResourceTypeRequestQuery) =>
+  call<PaginatedResponse<ResourceTypeResponse, PaginationMetadataBase>>({
+    url: `/employees/paginated${createQueryString(paginationQuery)}`,
+    method: 'GET',
+  }).then((response) => response.data)
+
+const addEmployee = (data: ResourceTypeModelRequest) =>
+  call<void>({
+    url: '/employees',
+    method: 'POST',
+    data,
+  }).then((response) => response.data)
+
+const updateEmployee = (id: number, data: ResourceTypeModelRequest) =>
+  call<void>({
+    url: `/employees/${id}`,
+    method: 'PUT',
+    data,
+  }).then((response) => response.data)
+
+const deleteEmployee = (id: number) =>
+  call<void>({
+    url: `/employees/${id}`,
+    method: 'DELETE',
+  }).then((response) => response.data)
+
 // HEALTHCHECK
 const getHealthcheck = () =>
   call({
@@ -362,4 +394,9 @@ export const apiCalls = {
   deleteUser,
   getScanPath,
   updateScanPath,
+  getEmployees,
+  getPaginatedEmployees,
+  addEmployee,
+  updateEmployee,
+  deleteEmployee,
 }

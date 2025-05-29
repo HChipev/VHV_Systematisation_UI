@@ -13,6 +13,7 @@ import { apiCalls } from 'src/shared/apiCalls'
 import {
   PAGINATED_DESCRIPTION_TYPES_QUERY_KEY,
   PAGINATED_DOCUMENT_TYPES_QUERY_KEY,
+  PAGINATED_EMPLOYEES_QUERY_KEY,
   PAGINATED_EXPENSE_TYPES_QUERY_KEY,
   PAGINATED_OFFICES_QUERY_KEY,
   PAGINATED_PAYMENT_TYPES_QUERY_KEY,
@@ -141,6 +142,20 @@ export const usePaginatedOffices = (
   useQuery({
     queryKey: [PAGINATED_OFFICES_QUERY_KEY, paginationQuery],
     queryFn: () => apiCalls.getPaginatedOffices(paginationQuery),
+  })
+
+export const useEmployees = () =>
+  useQuery({
+    queryKey: ['employees'],
+    queryFn: apiCalls.getEmployees,
+  })
+
+export const usePaginatedEmployees = (
+  paginationQuery: ResourceTypeRequestQuery
+) =>
+  useQuery({
+    queryKey: [PAGINATED_EMPLOYEES_QUERY_KEY, paginationQuery],
+    queryFn: () => apiCalls.getPaginatedEmployees(paginationQuery),
   })
 
 // HEALTHCHECK

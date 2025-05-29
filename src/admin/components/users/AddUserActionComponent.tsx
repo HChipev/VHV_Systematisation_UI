@@ -4,7 +4,7 @@ import { useQueryClient } from '@tanstack/react-query'
 
 // UTILS
 import { handleApiError } from 'src/shared/utils'
-import { useRoles } from 'src/shared/queries'
+import { useEmployees, useRoles } from 'src/shared/queries'
 import { useAddUser } from 'src/shared/mutations'
 
 // COMPONENTS
@@ -46,6 +46,7 @@ export const AddUserActionComponent: React.FC = () => {
 
   const { mutate } = useAddUser()
   const { data: roleOptions } = useRoles()
+  const { data: userNameOptions } = useEmployees()
 
   const [isOpen, setIsOpen] = React.useState(false)
   const [form, setForm] = React.useState<Partial<AddUserRequest>>({})
@@ -59,7 +60,8 @@ export const AddUserActionComponent: React.FC = () => {
       !data.email ||
       !data.password ||
       !data.roles ||
-      data.roles.length === 0
+      data.roles.length === 0 ||
+      !data.userName
     ) {
       enqueueSnackbar('Please fill in all fields', { variant: 'warning' })
 
@@ -67,6 +69,7 @@ export const AddUserActionComponent: React.FC = () => {
         email: !data.email,
         password: !data.password,
         roles: !data.roles || data.roles.length === 0,
+        userName: !data.userName,
       })
 
       return
@@ -174,6 +177,45 @@ export const AddUserActionComponent: React.FC = () => {
               error={Boolean(errors.password)}
               helperText={errors.password ? 'Required' : undefined}
             />
+
+            <FormControl fullWidth error={Boolean(errors.userName)} required>
+              <InputLabel id="user-name-label">User Name</InputLabel>
+
+              <Select
+                labelId="user-name-label"
+                name="userName"
+                label="User Name"
+                value={form?.userName}
+                onChange={(event) =>
+                  setForm((prev) => ({
+                    ...prev,
+                    userName: event.target.value,
+                  }))
+                }
+              >
+                {userNameOptions?.map((option) => (
+                  <MenuItem key={option.name} value={option.name}>
+                    {`${option.name}(${option.description})`}
+                  </MenuItem>
+                ))}
+              </Select>
+
+              <Box display="flex" justifyContent="end" width="100%">
+                <Button
+                  size="small"
+                  onClick={() =>
+                    setForm((prev) => ({
+                      ...prev,
+                      userName: undefined,
+                    }))
+                  }
+                >
+                  Reset
+                </Button>
+              </Box>
+
+              {errors.userName && <FormHelperText>Required</FormHelperText>}
+            </FormControl>
 
             <Box
               display="flex"

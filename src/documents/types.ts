@@ -37,6 +37,7 @@ export interface SavedDocument {
   description: string
   createdDateTime: Date
   name: string
+  employee: string
 }
 
 export interface SavedDocumentRequest {
@@ -45,6 +46,7 @@ export interface SavedDocumentRequest {
   documentTypeId: number
   expenseTypeId: number
   vehicleId?: number
+  employeeId?: number
   officeId?: number
   periodStartDate?: string
   periodEndDate?: string
@@ -101,6 +103,7 @@ export interface SavedDocumentRequestQuery extends PaginationRequest {
   counterpartyBulstat?: string
   descriptionType?: string
   description?: string
+  employee?: string
 }
 
 export interface ScanDocumentsFilters {
@@ -133,4 +136,5 @@ export interface SavedDocumentFilters {
   counterpartyBulstat?: string
   descriptionType?: string
   description?: string
+  employee?: string
 }

@@ -31,5 +31,6 @@ export interface User {
   id: number
   roles: Roles[]
   email: string
+  userName: string
   createdDateTime: Date
 }

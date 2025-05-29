@@ -12,6 +12,7 @@ import { Roles as RoleTypes, User } from 'src/shared/types'
 
 enum UserColumns {
   Id = 'id',
+  UserName = 'userName',
   Email = 'email',
   CreatedDateTime = 'createdDateTime',
   Roles = 'roles',
@@ -19,7 +20,12 @@ enum UserColumns {
 }
 
 export const columns: (
-  onUpdate: (id: number, email: string, roles: RoleTypes[]) => void,
+  onUpdate: (
+    id: number,
+    email: string,
+    roles: RoleTypes[],
+    userName: string
+  ) => void,
   onDelete: (id: number, email: string) => void
 ) => GridColDef[] = (onUpdate, onDelete) => [
   {
@@ -27,6 +33,13 @@ export const columns: (
     type: 'string',
     headerName: 'Id',
     width: 90,
+    resizable: false,
+  },
+  {
+    field: UserColumns.UserName,
+    type: 'string',
+    headerName: 'User Name',
+    flex: 1,
     resizable: false,
   },
   {
@@ -86,10 +99,10 @@ export const columns: (
           color="primary"
           onClick={() => {
             const {
-              row: { id, email, roles },
+              row: { id, email, roles, userName },
             } = params
 
-            onUpdate(id, email, roles)
+            onUpdate(id, email, roles, userName)
           }}
         >
           <EditOutlined />

@@ -61,6 +61,7 @@ export const SavedDocumentsTable: React.FC<Props> = ({ onPreviewFile }) => {
     counterpartyBulstat: tableFilters.counterpartyBulstat,
     descriptionType: tableFilters.descriptionType,
     description: tableFilters.description,
+    employee: tableFilters.employee,
   })
 
   let items: SavedDocument[] = []

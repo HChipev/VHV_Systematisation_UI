@@ -10,6 +10,7 @@ import {
   useOffices,
   usePaymentTypes,
   useVehicles,
+  useEmployees,
 } from 'src/shared/queries'
 
 // COMPONENTS
@@ -58,6 +59,7 @@ export const SaveDocumentDialog: React.FC<Props> = ({
   const { data: paymentTypes } = usePaymentTypes()
   const { data: vehicles } = useVehicles()
   const { data: offices } = useOffices()
+  const { data: employees } = useEmployees()
 
   const documentTypeOptions =
     documentTypes?.map((type) => ({
@@ -82,6 +84,12 @@ export const SaveDocumentDialog: React.FC<Props> = ({
       label: type.name,
       value: type.id,
       description: type.description,
+    })) ?? []
+  const employeeOptions =
+    employees?.map((employee) => ({
+      label: employee.name,
+      value: employee.id,
+      description: employee.description,
     })) ?? []
   const vehicleOptions =
     vehicles?.map((vehicle) => ({
@@ -164,6 +172,184 @@ export const SaveDocumentDialog: React.FC<Props> = ({
 
       <DialogContent>
         <Box display="flex" flexDirection="column" gap={theme.spacing(3)}>
+          <FormControl fullWidth error={Boolean(errors.expenseTypeId)} required>
+            <InputLabel id="expense-type-label">Expense Type</InputLabel>
+
+            <Select
+              labelId="expense-type-label"
+              name="expenseTypeId"
+              value={form.expenseTypeId ?? ''}
+              label="Expense Type"
+              onChange={(e) =>
+                setForm((prev) => ({
+                  ...prev,
+                  expenseTypeId: Number(e.target.value),
+                }))
+              }
+            >
+              {expenseTypeOptions.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {`${option.label}(${option.description})`}
+                </MenuItem>
+              ))}
+            </Select>
+
+            <Box display="flex" justifyContent="end" width="100%">
+              <Button
+                size="small"
+                onClick={() =>
+                  setForm((prev) => ({
+                    ...prev,
+                    expenseTypeId: undefined,
+                  }))
+                }
+              >
+                Reset
+              </Button>
+            </Box>
+
+            {errors.expenseTypeId && <FormHelperText>Required</FormHelperText>}
+          </FormControl>
+
+          <FormControl fullWidth>
+            <InputLabel id="personnel-label">Personnel</InputLabel>
+
+            <Select
+              disabled={Boolean(form.vehicleId || form.officeId)}
+              labelId="personnel-label"
+              name="employeeId"
+              value={form.employeeId ?? ''}
+              label="Personnel"
+              onChange={(e) =>
+                setForm((prev) => ({
+                  ...prev,
+                  employeeId: Number(e.target.value),
+                }))
+              }
+            >
+              {employeeOptions.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {`${option.label}(${option.description})`}
+                </MenuItem>
+              ))}
+            </Select>
+
+            <Box display="flex" justifyContent="end" width="100%">
+              <Button
+                disabled={Boolean(form.officeId || form.vehicleId)}
+                size="small"
+                onClick={() =>
+                  setForm((prev) => ({
+                    ...prev,
+                    employeeId: undefined,
+                  }))
+                }
+              >
+                Reset
+              </Button>
+            </Box>
+          </FormControl>
+
+          <FormControl fullWidth>
+            <InputLabel id="vehicle-label">Vehicle</InputLabel>
+
+            <Select
+              disabled={Boolean(form.officeId || form.employeeId)}
+              labelId="vehicle-label"
+              name="vehicleId"
+              value={form.vehicleId ?? ''}
+              label="Vehicle"
+              onChange={(e) =>
+                setForm((prev) => ({
+                  ...prev,
+                  vehicleId: Number(e.target.value),
+                }))
+              }
+            >
+              {vehicleOptions.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {`${option.label}(${option.description})`}
+                </MenuItem>
+              ))}
+            </Select>
+
+            <Box display="flex" justifyContent="end" width="100%">
+              <Button
+                disabled={Boolean(form.officeId || form.employeeId)}
+                size="small"
+                onClick={() =>
+                  setForm((prev) => ({
+                    ...prev,
+                    vehicleId: undefined,
+                  }))
+                }
+              >
+                Reset
+              </Button>
+            </Box>
+          </FormControl>
+
+          <FormControl fullWidth>
+            <InputLabel id="office-label">Office</InputLabel>
+
+            <Select
+              disabled={Boolean(form.vehicleId || form.employeeId)}
+              labelId="office-label"
+              name="officeId"
+              value={form.officeId ?? ''}
+              label="Office"
+              onChange={(e) =>
+                setForm((prev) => ({
+                  ...prev,
+                  officeId: Number(e.target.value),
+                }))
+              }
+            >
+              {officeOptions.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {`${option.label}(${option.description})`}
+                </MenuItem>
+              ))}
+            </Select>
+
+            <Box display="flex" justifyContent="end" width="100%">
+              <Button
+                disabled={Boolean(form.vehicleId || form.employeeId)}
+                size="small"
+                onClick={() =>
+                  setForm((prev) => ({
+                    ...prev,
+                    officeId: undefined,
+                  }))
+                }
+              >
+                Reset
+              </Button>
+            </Box>
+          </FormControl>
+
+          <TextField
+            label="Counterparty Name"
+            name="counterpartyName"
+            fullWidth
+            margin="none"
+            onChange={handleChange}
+            required
+            error={Boolean(errors.counterpartyName)}
+            helperText={errors.counterpartyName ? 'Required' : undefined}
+          />
+
+          <TextField
+            label="File Name/Description"
+            name="fileNameDescription"
+            fullWidth
+            margin="none"
+            onChange={handleChange}
+            required
+            error={Boolean(errors.fileNameDescription)}
+            helperText={errors.fileNameDescription ? 'Required' : undefined}
+          />
+
           <DatePicker
             label="Issued Date"
             maxDate={new Date()}
@@ -182,17 +368,6 @@ export const SaveDocumentDialog: React.FC<Props> = ({
                 helperText: errors.issuedDate ? 'Required' : undefined,
               },
             }}
-          />
-
-          <TextField
-            label="File Name/Description"
-            name="fileNameDescription"
-            fullWidth
-            margin="none"
-            onChange={handleChange}
-            required
-            error={Boolean(errors.fileNameDescription)}
-            helperText={errors.fileNameDescription ? 'Required' : undefined}
           />
 
           <FormControl
@@ -237,157 +412,6 @@ export const SaveDocumentDialog: React.FC<Props> = ({
 
             {errors.documentTypeId && <FormHelperText>Required</FormHelperText>}
           </FormControl>
-
-          <TextField
-            label="Document Number"
-            name="documentNumber"
-            fullWidth
-            margin="none"
-            onChange={handleChange}
-          />
-
-          <FormControl fullWidth error={Boolean(errors.expenseTypeId)} required>
-            <InputLabel id="expense-type-label">Expense Type</InputLabel>
-
-            <Select
-              labelId="expense-type-label"
-              name="expenseTypeId"
-              value={form.expenseTypeId ?? ''}
-              label="Expense Type"
-              onChange={(e) =>
-                setForm((prev) => ({
-                  ...prev,
-                  expenseTypeId: Number(e.target.value),
-                }))
-              }
-            >
-              {expenseTypeOptions.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {`${option.label}(${option.description})`}
-                </MenuItem>
-              ))}
-            </Select>
-
-            <Box display="flex" justifyContent="end" width="100%">
-              <Button
-                size="small"
-                onClick={() =>
-                  setForm((prev) => ({
-                    ...prev,
-                    expenseTypeId: undefined,
-                  }))
-                }
-              >
-                Reset
-              </Button>
-            </Box>
-
-            {errors.expenseTypeId && <FormHelperText>Required</FormHelperText>}
-          </FormControl>
-
-          <FormControl fullWidth>
-            <InputLabel id="vehicle-label">Vehicle</InputLabel>
-
-            <Select
-              disabled={Boolean(form.officeId)}
-              labelId="vehicle-label"
-              name="vehicleId"
-              value={form.vehicleId ?? ''}
-              label="Vehicle"
-              onChange={(e) =>
-                setForm((prev) => ({
-                  ...prev,
-                  vehicleId: Number(e.target.value),
-                }))
-              }
-            >
-              {vehicleOptions.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {`${option.label}(${option.description})`}
-                </MenuItem>
-              ))}
-            </Select>
-
-            <Box display="flex" justifyContent="end" width="100%">
-              <Button
-                disabled={Boolean(form.officeId)}
-                size="small"
-                onClick={() =>
-                  setForm((prev) => ({
-                    ...prev,
-                    vehicleId: undefined,
-                  }))
-                }
-              >
-                Reset
-              </Button>
-            </Box>
-          </FormControl>
-
-          <FormControl fullWidth>
-            <InputLabel id="office-label">Office</InputLabel>
-
-            <Select
-              disabled={Boolean(form.vehicleId)}
-              labelId="office-label"
-              name="officeId"
-              value={form.officeId ?? ''}
-              label="Office"
-              onChange={(e) =>
-                setForm((prev) => ({
-                  ...prev,
-                  officeId: Number(e.target.value),
-                }))
-              }
-            >
-              {officeOptions.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {`${option.label}(${option.description})`}
-                </MenuItem>
-              ))}
-            </Select>
-
-            <Box display="flex" justifyContent="end" width="100%">
-              <Button
-                disabled={Boolean(form.vehicleId)}
-                size="small"
-                onClick={() =>
-                  setForm((prev) => ({
-                    ...prev,
-                    officeId: undefined,
-                  }))
-                }
-              >
-                Reset
-              </Button>
-            </Box>
-          </FormControl>
-
-          <DatePicker
-            label="Period Start Date"
-            value={form.periodStartDate ? new Date(form.periodStartDate) : null}
-            onChange={(value) =>
-              setForm((prev) => ({
-                ...prev,
-                periodStartDate: value
-                  ? format(value, 'yyyy-MM-dd')
-                  : undefined,
-              }))
-            }
-            slotProps={{ textField: { fullWidth: true } }}
-          />
-
-          <DatePicker
-            label="Period End Date"
-            value={form.periodEndDate ? new Date(form.periodEndDate) : null}
-            onChange={(value) =>
-              setForm((prev) => ({
-                ...prev,
-                periodEndDate: value ? format(value, 'yyyy-MM-dd') : undefined,
-              }))
-            }
-            slotProps={{ textField: { fullWidth: true } }}
-          />
 
           <TextField
             label="Price"
@@ -440,37 +464,6 @@ export const SaveDocumentDialog: React.FC<Props> = ({
             {errors.paymentTypeId && <FormHelperText>Required</FormHelperText>}
           </FormControl>
 
-          <DatePicker
-            label="Payment Date"
-            value={form.paymentDate ? new Date(form.paymentDate) : null}
-            onChange={(value) =>
-              setForm((prev) => ({
-                ...prev,
-                paymentDate: value ? format(value, 'yyyy-MM-dd') : undefined,
-              }))
-            }
-            slotProps={{ textField: { fullWidth: true } }}
-          />
-
-          <TextField
-            label="Counterparty Name"
-            name="counterpartyName"
-            fullWidth
-            margin="none"
-            onChange={handleChange}
-            required
-            error={Boolean(errors.counterpartyName)}
-            helperText={errors.counterpartyName ? 'Required' : undefined}
-          />
-
-          <TextField
-            label="Counterparty Bulstat"
-            name="counterpartyBulstat"
-            fullWidth
-            margin="none"
-            onChange={handleChange}
-          />
-
           <FormControl
             fullWidth
             error={Boolean(errors.descriptionTypeId)}
@@ -517,6 +510,60 @@ export const SaveDocumentDialog: React.FC<Props> = ({
               <FormHelperText>Required</FormHelperText>
             )}
           </FormControl>
+
+          <TextField
+            label="Document Number"
+            name="documentNumber"
+            fullWidth
+            margin="none"
+            onChange={handleChange}
+          />
+
+          <DatePicker
+            label="Period Start Date"
+            value={form.periodStartDate ? new Date(form.periodStartDate) : null}
+            onChange={(value) =>
+              setForm((prev) => ({
+                ...prev,
+                periodStartDate: value
+                  ? format(value, 'yyyy-MM-dd')
+                  : undefined,
+              }))
+            }
+            slotProps={{ textField: { fullWidth: true } }}
+          />
+
+          <DatePicker
+            label="Period End Date"
+            value={form.periodEndDate ? new Date(form.periodEndDate) : null}
+            onChange={(value) =>
+              setForm((prev) => ({
+                ...prev,
+                periodEndDate: value ? format(value, 'yyyy-MM-dd') : undefined,
+              }))
+            }
+            slotProps={{ textField: { fullWidth: true } }}
+          />
+
+          <DatePicker
+            label="Payment Date"
+            value={form.paymentDate ? new Date(form.paymentDate) : null}
+            onChange={(value) =>
+              setForm((prev) => ({
+                ...prev,
+                paymentDate: value ? format(value, 'yyyy-MM-dd') : undefined,
+              }))
+            }
+            slotProps={{ textField: { fullWidth: true } }}
+          />
+
+          <TextField
+            label="Counterparty Bulstat"
+            name="counterpartyBulstat"
+            fullWidth
+            margin="none"
+            onChange={handleChange}
+          />
 
           <TextField
             label="Description"
