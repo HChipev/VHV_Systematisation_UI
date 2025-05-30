@@ -5,6 +5,7 @@ export interface Role {
 export enum Roles {
   Admin = 'Admin',
   User = 'User',
+  Viewer = 'Viewer',
 }
 
 export interface ApiError {

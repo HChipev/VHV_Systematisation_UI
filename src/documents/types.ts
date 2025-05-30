@@ -40,7 +40,7 @@ export interface SavedDocument {
   employee: string
 }
 
-export interface SavedDocumentRequest {
+export interface DocumentRequest {
   issuedDate: string
   fileNameDescription: string
   documentTypeId: number

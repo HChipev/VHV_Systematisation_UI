@@ -36,20 +36,20 @@ import { DatePicker } from '@mui/x-date-pickers'
 import CloseIcon from '@mui/icons-material/Close'
 
 // TYPES & CONSTANTS
-import { DocumentRequest } from 'src/documents/types'
+import { DocumentRequest, SavedDocument } from 'src/documents/types'
 
 interface Props {
   isOpen: boolean
   onClose: () => void
-  onSave: (data: DocumentRequest) => void
-  scannedDocumentId: number | null
+  onUpdate: (data: DocumentRequest) => void
+  savedDocument: SavedDocument
 }
 
-export const SaveDocumentDialog: React.FC<Props> = ({
+export const UpdateDocumentDialog: React.FC<Props> = ({
   isOpen,
   onClose,
-  onSave,
-  scannedDocumentId,
+  onUpdate,
+  savedDocument,
 }) => {
   const theme = useTheme()
 
@@ -110,11 +110,54 @@ export const SaveDocumentDialog: React.FC<Props> = ({
   >({})
 
   React.useEffect(() => {
-    setForm((prev) => ({
-      ...prev,
-      scannedDocumentId: scannedDocumentId ?? undefined,
-    }))
-  }, [scannedDocumentId])
+    if (savedDocument) {
+      setForm({
+        issuedDate: savedDocument.issuedDate
+          ? format(savedDocument.issuedDate, 'yyyy-MM-dd')
+          : undefined,
+        fileNameDescription: savedDocument.fileNameDescription,
+        documentTypeId: documentTypes?.find(
+          (x) => x.name === savedDocument.documentType
+        )?.id,
+        expenseTypeId: expenseTypes?.find(
+          (x) => x.name === savedDocument.expenseType
+        )?.id,
+        vehicleId: vehicles?.find((x) => x.name === savedDocument.vehicle)?.id,
+        employeeId: employees?.find((x) => x.name === savedDocument.employee)
+          ?.id,
+        officeId: offices?.find((x) => x.name === savedDocument.office)?.id,
+        periodStartDate: savedDocument.periodStartDate
+          ? format(savedDocument.periodStartDate, 'yyyy-MM-dd')
+          : undefined,
+        periodEndDate: savedDocument.periodEndDate
+          ? format(savedDocument.periodEndDate, 'yyyy-MM-dd')
+          : undefined,
+        documentNumber: savedDocument.documentNumber,
+        price: savedDocument.price,
+        paymentTypeId: paymentTypes?.find(
+          (x) => x.name === savedDocument.paymentType
+        )?.id,
+        paymentDate: savedDocument.paymentDate
+          ? format(savedDocument.paymentDate, 'yyyy-MM-dd')
+          : undefined,
+        counterpartyName: savedDocument.counterpartyName,
+        counterpartyBulstat: savedDocument.counterpartyBulstat,
+        descriptionTypeId: descriptionTypes?.find(
+          (x) => x.name === savedDocument.descriptionType
+        )?.id,
+        description: savedDocument.description,
+      })
+    }
+  }, [
+    savedDocument,
+    documentTypes,
+    descriptionTypes,
+    expenseTypes,
+    paymentTypes,
+    vehicles,
+    offices,
+    employees,
+  ])
 
   const handleChange = ({
     target: { name, value },
@@ -157,7 +200,7 @@ export const SaveDocumentDialog: React.FC<Props> = ({
       return
     }
 
-    onSave(form as DocumentRequest)
+    onUpdate(form as DocumentRequest)
   }
 
   return (
@@ -169,7 +212,7 @@ export const SaveDocumentDialog: React.FC<Props> = ({
       slotProps={{ paper: { style: { overflowX: 'hidden' } } }}
     >
       <Box display="flex" justifyContent="space-between">
-        <DialogTitle>Save Document</DialogTitle>
+        <DialogTitle>Update Document</DialogTitle>
 
         <IconButton onClick={onClose} color="error">
           <CloseIcon />
@@ -337,6 +380,7 @@ export const SaveDocumentDialog: React.FC<Props> = ({
           <TextField
             label="Counterparty Name"
             name="counterpartyName"
+            value={form.counterpartyName ?? ''}
             fullWidth
             margin="none"
             onChange={handleChange}
@@ -348,6 +392,7 @@ export const SaveDocumentDialog: React.FC<Props> = ({
           <TextField
             label="File Name/Description"
             name="fileNameDescription"
+            value={form.fileNameDescription ?? ''}
             fullWidth
             margin="none"
             onChange={handleChange}
@@ -422,6 +467,7 @@ export const SaveDocumentDialog: React.FC<Props> = ({
           <TextField
             label="Price"
             name="price"
+            value={form.price ?? ''}
             type="number"
             fullWidth
             margin="none"
@@ -520,6 +566,7 @@ export const SaveDocumentDialog: React.FC<Props> = ({
           <TextField
             label="Document Number"
             name="documentNumber"
+            value={form.documentNumber ?? ''}
             fullWidth
             margin="none"
             onChange={handleChange}
@@ -566,6 +613,7 @@ export const SaveDocumentDialog: React.FC<Props> = ({
           <TextField
             label="Counterparty Bulstat"
             name="counterpartyBulstat"
+            value={form.counterpartyBulstat ?? ''}
             fullWidth
             margin="none"
             onChange={handleChange}
@@ -574,6 +622,7 @@ export const SaveDocumentDialog: React.FC<Props> = ({
           <TextField
             label="Description"
             name="description"
+            value={form.description ?? ''}
             fullWidth
             multiline
             rows={3}
@@ -589,7 +638,7 @@ export const SaveDocumentDialog: React.FC<Props> = ({
         </Button>
 
         <Button onClick={handleSubmit} variant="contained" color="primary">
-          Save
+          Update
         </Button>
       </DialogActions>
     </Dialog>

@@ -22,7 +22,7 @@ import { ScannedDocument } from 'src/documents/types'
 import { PaginationMetadataBase } from 'src/shared/types'
 
 interface Props {
-  onPreviewFile: (file: string) => void
+  onPreviewFile: (file: string, fileName: string) => void
   onSaveFile: (id: number) => void
 }
 

@@ -1,5 +1,5 @@
 // COMPONENTS
-import { Button } from '@mui/material'
+import { Box, Button } from '@mui/material'
 
 // ICONS
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf'
@@ -8,12 +8,13 @@ import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf'
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid/models'
 import { SavedDocument } from 'src/documents/types'
 import { format } from 'date-fns'
+import { EditOutlined } from '@mui/icons-material'
 
 enum SavedDocumentColumns {
   Id = 'id',
   Name = 'name',
   CreatedDateTime = 'createdDateTime',
-  File = 'file',
+  Action = 'action',
   IssuedDate = 'issuedDate',
   FileNameDescription = 'fileNameDescription',
   DocumentType = 'documentType',
@@ -35,9 +36,10 @@ enum SavedDocumentColumns {
   Employee = 'employee',
 }
 
-export const columns: (onPreviewPdf: (file: string) => void) => GridColDef[] = (
-  onPreviewPdf
-) => [
+export const columns: (
+  onPreviewPdf: (file: string, fileName: string) => void,
+  onUpdate: (data: SavedDocument) => void
+) => GridColDef[] = (onPreviewPdf, onUpdate) => [
   {
     field: SavedDocumentColumns.Id,
     type: 'string',
@@ -49,8 +51,7 @@ export const columns: (onPreviewPdf: (file: string) => void) => GridColDef[] = (
     field: SavedDocumentColumns.Name,
     type: 'string',
     headerName: 'Name',
-    width: 300,
-    resizable: false,
+    width: 400,
   },
   {
     field: SavedDocumentColumns.CreatedDateTime,
@@ -208,30 +209,43 @@ export const columns: (onPreviewPdf: (file: string) => void) => GridColDef[] = (
     resizable: false,
   },
   {
-    field: SavedDocumentColumns.File,
+    field: SavedDocumentColumns.Action,
     type: 'actions',
     headerName: 'Actions',
     sortable: false,
     filterable: false,
     resizable: false,
     renderCell: (params: GridRenderCellParams<SavedDocument>) => (
-      <Button
-        variant="outlined"
-        startIcon={<PictureAsPdfIcon />}
-        onClick={() => {
-          const {
-            row: { file },
-          } = params
-          if (!file) {
-            return
-          }
+      <Box display="flex" justifyContent="space-between" width="100%" gap={1}>
+        <Button
+          variant="outlined"
+          startIcon={<PictureAsPdfIcon />}
+          onClick={() => {
+            const {
+              row: { file, name },
+            } = params
+            if (!file) {
+              return
+            }
 
-          onPreviewPdf(file)
-        }}
-      >
-        Preview
-      </Button>
+            onPreviewPdf(file, name)
+          }}
+        >
+          Preview
+        </Button>
+
+        <Button
+          variant="outlined"
+          onClick={() => {
+            const { row } = params
+
+            onUpdate(row)
+          }}
+        >
+          <EditOutlined />
+        </Button>
+      </Box>
     ),
-    width: 130,
+    width: 200,
   },
 ]

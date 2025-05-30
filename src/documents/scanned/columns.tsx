@@ -14,11 +14,11 @@ enum ScannedDocumentColumns {
   Id = 'id',
   Name = 'name',
   CreatedDateTime = 'createdDateTime',
-  File = 'file',
+  Action = 'action',
 }
 
 export const columns: (
-  onPreviewPdf: (file: string) => void,
+  onPreviewPdf: (file: string, fileName: string) => void,
   onSaveFile: (id: number) => void
 ) => GridColDef[] = (onPreviewPdf, onSaveFile) => [
   {
@@ -44,7 +44,7 @@ export const columns: (
     resizable: false,
   },
   {
-    field: ScannedDocumentColumns.File,
+    field: ScannedDocumentColumns.Action,
     type: 'actions',
     headerName: 'Actions',
     sortable: false,
@@ -58,13 +58,13 @@ export const columns: (
           startIcon={<PictureAsPdfIcon />}
           onClick={() => {
             const {
-              row: { file },
+              row: { file, name },
             } = params
             if (!file) {
               return
             }
 
-            onPreviewPdf(file)
+            onPreviewPdf(file, name)
           }}
         >
           Preview

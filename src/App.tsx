@@ -56,7 +56,10 @@ const queryClient = new QueryClient({
     onError: (error: Error) => {
       const axiosError = error as AxiosError
 
-      if (axiosError.response?.status === 403) {
+      if (
+        axiosError.response?.status === 403 ||
+        axiosError.response?.status === 401
+      ) {
         window.history.back()
       }
     },
@@ -65,7 +68,10 @@ const queryClient = new QueryClient({
     onError: (error: Error) => {
       const axiosError = error as AxiosError
 
-      if (axiosError.response?.status === 403) {
+      if (
+        axiosError.response?.status === 403 ||
+        axiosError.response?.status === 401
+      ) {
         window.history.back()
       }
     },

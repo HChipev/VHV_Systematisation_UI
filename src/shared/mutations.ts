@@ -5,7 +5,7 @@ import { apiCalls } from 'src/shared/apiCalls'
 
 // TYPES & CONSTANTS
 import { LoginRequest } from 'src/authentication/types'
-import { SavedDocumentRequest } from 'src/documents/types'
+import { DocumentRequest } from 'src/documents/types'
 import { ResourceTypeModelRequest } from 'src/admin/components/types/types'
 import {
   AddUserRequest,
@@ -50,7 +50,14 @@ export const useDeleteUser = () =>
 export const useAddSavedDocument = () =>
   useMutation({
     mutationKey: ['addSavedDocuments'],
-    mutationFn: (data: SavedDocumentRequest) => apiCalls.addSavedDocument(data),
+    mutationFn: (data: DocumentRequest) => apiCalls.addSavedDocument(data),
+  })
+
+export const useUpdateSavedDocument = () =>
+  useMutation({
+    mutationKey: ['updateSavedDocument'],
+    mutationFn: ({ id, data }: { id: number; data: DocumentRequest }) =>
+      apiCalls.updateSavedDocument(id, data),
   })
 
 // TYPES

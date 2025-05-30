@@ -28,6 +28,9 @@ import { DatePicker } from '@mui/x-date-pickers'
 
 // TYPES & CONSTANTS
 import { SavedDocumentFilters } from 'src/documents/types'
+import { useSelector } from 'react-redux'
+import { getUserRoles } from 'src/shared/userSelectors'
+import { Roles } from 'src/shared/types'
 
 interface Props {
   onFilter: (filters: SavedDocumentFilters) => void
@@ -39,6 +42,8 @@ export const SavedDocumentsFilters: React.FC<Props> = ({
   filters,
 }) => {
   const theme = useTheme()
+
+  const userRoles = useSelector(getUserRoles)
 
   const { data: documentTypes } = useDocumentTypes()
   const { data: descriptionTypes } = useDescriptionTypes()
@@ -236,6 +241,18 @@ export const SavedDocumentsFilters: React.FC<Props> = ({
             slotProps={{ textField: { fullWidth: true } }}
           />
         </Box>
+
+        <Box display="flex" justifyContent="end" width="100%">
+          <Button
+            size="small"
+            onClick={() => {
+              setStartCreatedDateTime(null)
+              setEndCreatedDateTime(null)
+            }}
+          >
+            Reset
+          </Button>
+        </Box>
       </Box>
 
       <Box
@@ -273,6 +290,18 @@ export const SavedDocumentsFilters: React.FC<Props> = ({
             }
             slotProps={{ textField: { fullWidth: true } }}
           />
+        </Box>
+
+        <Box display="flex" justifyContent="end" width="100%">
+          <Button
+            size="small"
+            onClick={() => {
+              setStartIssuedDate(null)
+              setEndIssuedDate(null)
+            }}
+          >
+            Reset
+          </Button>
         </Box>
       </Box>
 
@@ -317,6 +346,12 @@ export const SavedDocumentsFilters: React.FC<Props> = ({
               </MenuItem>
             ))}
           </Select>
+
+          <Box display="flex" justifyContent="end" width="100%">
+            <Button size="small" onClick={() => setDocumentType(null)}>
+              Reset
+            </Button>
+          </Box>
         </FormControl>
       </Box>
 
@@ -344,6 +379,12 @@ export const SavedDocumentsFilters: React.FC<Props> = ({
               </MenuItem>
             ))}
           </Select>
+
+          <Box display="flex" justifyContent="end" width="100%">
+            <Button size="small" onClick={() => setExpenseType(null)}>
+              Reset
+            </Button>
+          </Box>
         </FormControl>
       </Box>
 
@@ -371,6 +412,12 @@ export const SavedDocumentsFilters: React.FC<Props> = ({
               </MenuItem>
             ))}
           </Select>
+
+          <Box display="flex" justifyContent="end" width="100%">
+            <Button size="small" onClick={() => setVehicle(null)}>
+              Reset
+            </Button>
+          </Box>
         </FormControl>
       </Box>
 
@@ -398,35 +445,49 @@ export const SavedDocumentsFilters: React.FC<Props> = ({
               </MenuItem>
             ))}
           </Select>
+
+          <Box display="flex" justifyContent="end" width="100%">
+            <Button size="small" onClick={() => setOffice(null)}>
+              Reset
+            </Button>
+          </Box>
         </FormControl>
       </Box>
 
-      <Box
-        display="flex"
-        flexDirection="column"
-        width="100%"
-        gap={theme.spacing(1)}
-      >
-        <Typography variant="body2">Personnel</Typography>
+      {userRoles.filter((x) => x !== Roles.Viewer).length > 0 && (
+        <Box
+          display="flex"
+          flexDirection="column"
+          width="100%"
+          gap={theme.spacing(1)}
+        >
+          <Typography variant="body2">Personnel</Typography>
 
-        <FormControl fullWidth>
-          <InputLabel id="personnel-label">Personnel</InputLabel>
+          <FormControl fullWidth>
+            <InputLabel id="personnel-label">Personnel</InputLabel>
 
-          <Select
-            labelId="personnel-label"
-            name="employeeId"
-            value={employee}
-            label="Personnel"
-            onChange={(e) => setEmployee(e.target.value)}
-          >
-            {employeeOptions.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {`${option.label}(${option.description})`}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </Box>
+            <Select
+              labelId="personnel-label"
+              name="employeeId"
+              value={employee}
+              label="Personnel"
+              onChange={(e) => setEmployee(e.target.value)}
+            >
+              {employeeOptions.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {`${option.label}(${option.description})`}
+                </MenuItem>
+              ))}
+            </Select>
+
+            <Box display="flex" justifyContent="end" width="100%">
+              <Button size="small" onClick={() => setEmployee(null)}>
+                Reset
+              </Button>
+            </Box>
+          </FormControl>
+        </Box>
+      )}
 
       <Box
         display="flex"
@@ -463,6 +524,18 @@ export const SavedDocumentsFilters: React.FC<Props> = ({
             }
             slotProps={{ textField: { fullWidth: true } }}
           />
+        </Box>
+
+        <Box display="flex" justifyContent="end" width="100%">
+          <Button
+            size="small"
+            onClick={() => {
+              setStartPeriodStartDate(null)
+              setEndPeriodStartDate(null)
+            }}
+          >
+            Reset
+          </Button>
         </Box>
       </Box>
 
@@ -501,6 +574,18 @@ export const SavedDocumentsFilters: React.FC<Props> = ({
             }
             slotProps={{ textField: { fullWidth: true } }}
           />
+        </Box>
+
+        <Box display="flex" justifyContent="end" width="100%">
+          <Button
+            size="small"
+            onClick={() => {
+              setStartPeriodEndDate(null)
+              setEndPeriodEndDate(null)
+            }}
+          >
+            Reset
+          </Button>
         </Box>
       </Box>
 
@@ -583,6 +668,12 @@ export const SavedDocumentsFilters: React.FC<Props> = ({
               </MenuItem>
             ))}
           </Select>
+
+          <Box display="flex" justifyContent="end" width="100%">
+            <Button size="small" onClick={() => setPaymentType(null)}>
+              Reset
+            </Button>
+          </Box>
         </FormControl>
       </Box>
 
@@ -621,6 +712,18 @@ export const SavedDocumentsFilters: React.FC<Props> = ({
             }
             slotProps={{ textField: { fullWidth: true } }}
           />
+        </Box>
+
+        <Box display="flex" justifyContent="end" width="100%">
+          <Button
+            size="small"
+            onClick={() => {
+              setStartPaymentDate(null)
+              setEndPaymentDate(null)
+            }}
+          >
+            Reset
+          </Button>
         </Box>
       </Box>
 
@@ -682,6 +785,12 @@ export const SavedDocumentsFilters: React.FC<Props> = ({
               </MenuItem>
             ))}
           </Select>
+
+          <Box display="flex" justifyContent="end" width="100%">
+            <Button size="small" onClick={() => setDescriptionType(null)}>
+              Reset
+            </Button>
+          </Box>
         </FormControl>
       </Box>
 

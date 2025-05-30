@@ -6,7 +6,7 @@ import { LoginRequest, TokenResponse } from 'src/authentication/types'
 import {
   ResourceTypeResponse,
   SavedDocument,
-  SavedDocumentRequest,
+  DocumentRequest,
   SavedDocumentRequestQuery,
   ScannedDocument,
   ScannedDocumentRequestQuery,
@@ -94,10 +94,17 @@ const getSavedDocuments = (paginationQuery: SavedDocumentRequestQuery) =>
     method: 'GET',
   }).then((response) => response.data)
 
-const addSavedDocument = (data: SavedDocumentRequest) =>
+const addSavedDocument = (data: DocumentRequest) =>
   call<void>({
     url: '/documents/saved',
     method: 'POST',
+    data,
+  }).then((response) => response.data)
+
+const updateSavedDocument = (id: number, data: DocumentRequest) =>
+  call<void>({
+    url: `/documents/saved/${id}`,
+    method: 'PUT',
     data,
   }).then((response) => response.data)
 
@@ -399,4 +406,5 @@ export const apiCalls = {
   addEmployee,
   updateEmployee,
   deleteEmployee,
+  updateSavedDocument,
 }

@@ -99,6 +99,18 @@ export const ScannedDocumentsFilters: React.FC<Props> = ({
             slotProps={{ textField: { fullWidth: true } }}
           />
         </Box>
+
+        <Box display="flex" justifyContent="end" width="100%">
+          <Button
+            size="small"
+            onClick={() => {
+              setStartCreatedDateTime(null)
+              setEndCreatedDateTime(null)
+            }}
+          >
+            Reset
+          </Button>
+        </Box>
       </Box>
 
       <Box display="flex" justifyContent="space-between" width="100%">
