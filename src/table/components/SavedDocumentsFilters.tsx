@@ -388,105 +388,107 @@ export const SavedDocumentsFilters: React.FC<Props> = ({
         </FormControl>
       </Box>
 
-      <Box
-        display="flex"
-        flexDirection="column"
-        width="100%"
-        gap={theme.spacing(1)}
-      >
-        <Typography variant="body2">Vehicle</Typography>
-
-        <FormControl fullWidth>
-          <InputLabel id="vehicle-label">Vehicle</InputLabel>
-
-          <Select
-            labelId="vehicle-label"
-            name="vehicleId"
-            value={vehicle}
-            label="Vehicle"
-            onChange={(e) => setVehicle(e.target.value)}
-          >
-            {vehicleOptions.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {`${option.label}(${option.description})`}
-              </MenuItem>
-            ))}
-          </Select>
-
-          <Box display="flex" justifyContent="end" width="100%">
-            <Button size="small" onClick={() => setVehicle(null)}>
-              Reset
-            </Button>
-          </Box>
-        </FormControl>
-      </Box>
-
-      <Box
-        display="flex"
-        flexDirection="column"
-        width="100%"
-        gap={theme.spacing(1)}
-      >
-        <Typography variant="body2">Office</Typography>
-
-        <FormControl fullWidth>
-          <InputLabel id="office-label">Office</InputLabel>
-
-          <Select
-            labelId="office-label"
-            name="officeId"
-            value={office}
-            label="Office"
-            onChange={(e) => setOffice(e.target.value)}
-          >
-            {officeOptions.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {`${option.label}(${option.description})`}
-              </MenuItem>
-            ))}
-          </Select>
-
-          <Box display="flex" justifyContent="end" width="100%">
-            <Button size="small" onClick={() => setOffice(null)}>
-              Reset
-            </Button>
-          </Box>
-        </FormControl>
-      </Box>
-
       {userRoles.filter((x) => x !== Roles.Viewer).length > 0 && (
-        <Box
-          display="flex"
-          flexDirection="column"
-          width="100%"
-          gap={theme.spacing(1)}
-        >
-          <Typography variant="body2">Personnel</Typography>
+        <>
+          <Box
+            display="flex"
+            flexDirection="column"
+            width="100%"
+            gap={theme.spacing(1)}
+          >
+            <Typography variant="body2">Vehicle</Typography>
 
-          <FormControl fullWidth>
-            <InputLabel id="personnel-label">Personnel</InputLabel>
+            <FormControl fullWidth>
+              <InputLabel id="vehicle-label">Vehicle</InputLabel>
 
-            <Select
-              labelId="personnel-label"
-              name="employeeId"
-              value={employee}
-              label="Personnel"
-              onChange={(e) => setEmployee(e.target.value)}
-            >
-              {employeeOptions.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {`${option.label}(${option.description})`}
-                </MenuItem>
-              ))}
-            </Select>
+              <Select
+                labelId="vehicle-label"
+                name="vehicleId"
+                value={vehicle}
+                label="Vehicle"
+                onChange={(e) => setVehicle(e.target.value)}
+              >
+                {vehicleOptions.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {`${option.label}(${option.description})`}
+                  </MenuItem>
+                ))}
+              </Select>
 
-            <Box display="flex" justifyContent="end" width="100%">
-              <Button size="small" onClick={() => setEmployee(null)}>
-                Reset
-              </Button>
-            </Box>
-          </FormControl>
-        </Box>
+              <Box display="flex" justifyContent="end" width="100%">
+                <Button size="small" onClick={() => setVehicle(null)}>
+                  Reset
+                </Button>
+              </Box>
+            </FormControl>
+          </Box>
+
+          <Box
+            display="flex"
+            flexDirection="column"
+            width="100%"
+            gap={theme.spacing(1)}
+          >
+            <Typography variant="body2">Office</Typography>
+
+            <FormControl fullWidth>
+              <InputLabel id="office-label">Office</InputLabel>
+
+              <Select
+                labelId="office-label"
+                name="officeId"
+                value={office}
+                label="Office"
+                onChange={(e) => setOffice(e.target.value)}
+              >
+                {officeOptions.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {`${option.label}(${option.description})`}
+                  </MenuItem>
+                ))}
+              </Select>
+
+              <Box display="flex" justifyContent="end" width="100%">
+                <Button size="small" onClick={() => setOffice(null)}>
+                  Reset
+                </Button>
+              </Box>
+            </FormControl>
+          </Box>
+
+          <Box
+            display="flex"
+            flexDirection="column"
+            width="100%"
+            gap={theme.spacing(1)}
+          >
+            <Typography variant="body2">Personnel</Typography>
+
+            <FormControl fullWidth>
+              <InputLabel id="personnel-label">Personnel</InputLabel>
+
+              <Select
+                labelId="personnel-label"
+                name="employeeId"
+                value={employee}
+                label="Personnel"
+                onChange={(e) => setEmployee(e.target.value)}
+              >
+                {employeeOptions.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {`${option.label}(${option.description})`}
+                  </MenuItem>
+                ))}
+              </Select>
+
+              <Box display="flex" justifyContent="end" width="100%">
+                <Button size="small" onClick={() => setEmployee(null)}>
+                  Reset
+                </Button>
+              </Box>
+            </FormControl>
+          </Box>
+        </>
       )}
 
       <Box
