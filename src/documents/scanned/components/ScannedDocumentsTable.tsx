@@ -23,7 +23,7 @@ import { PaginationMetadataBase } from 'src/shared/types'
 
 interface Props {
   onPreviewFile: (file: string, fileName: string) => void
-  onSaveFile: (id: number) => void
+  onSaveFile: (id: number, file: string, fileName: string) => void
 }
 
 export const ScannedDocumentsTable: React.FC<Props> = ({

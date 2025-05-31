@@ -60,18 +60,14 @@ export const DocumentsPage: React.FC = () => {
 
   const handleClosePdfPreviewDialog = () => {
     setIsPdfPreviewOpen(false)
-    setPreviewFile(null)
-    setPreviewFileName(null)
   }
 
   const handleCloseSaveDocumentDialog = () => {
     setIsSaveDocumentOpen(false)
-    setScannedDocumentId(null)
   }
 
   const handleCloseUpdateDocumentDialog = () => {
     setIsUpdateDocumentOpen(false)
-    setSavedDocument(null)
   }
 
   return (
@@ -117,9 +113,11 @@ export const DocumentsPage: React.FC = () => {
                 setIsPdfPreviewOpen(true)
                 setPreviewFileName(fileName)
               }}
-              onSaveFile={(id: number) => {
+              onSaveFile={(id: number, file: string, fileName: string) => {
                 setIsSaveDocumentOpen(true)
                 setScannedDocumentId(id)
+                setPreviewFile(file)
+                setPreviewFileName(fileName)
               }}
             />
           )}
@@ -167,6 +165,13 @@ export const DocumentsPage: React.FC = () => {
       {isSaveDocumentOpen && (
         <SaveDocumentDialog
           isOpen={isSaveDocumentOpen}
+          file={previewFile}
+          fileName={previewFileName}
+          onPreview={(file, fileName) => {
+            setPreviewFile(file)
+            setIsPdfPreviewOpen(true)
+            setPreviewFileName(fileName)
+          }}
           onClose={handleCloseSaveDocumentDialog}
           onSave={(data) =>
             addSavedDocument(data, {

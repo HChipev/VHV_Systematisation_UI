@@ -19,7 +19,7 @@ enum ScannedDocumentColumns {
 
 export const columns: (
   onPreviewPdf: (file: string, fileName: string) => void,
-  onSaveFile: (id: number) => void
+  onSaveFile: (id: number, file: string, fileName: string) => void
 ) => GridColDef[] = (onPreviewPdf, onSaveFile) => [
   {
     field: ScannedDocumentColumns.Id,
@@ -77,10 +77,10 @@ export const columns: (
           startIcon={<SaveIcon />}
           onClick={() => {
             const {
-              row: { id },
+              row: { id, file, name },
             } = params
 
-            onSaveFile(Number(id))
+            onSaveFile(Number(id), file, name)
           }}
         >
           Save

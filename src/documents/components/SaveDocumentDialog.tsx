@@ -29,11 +29,13 @@ import {
   Select,
   MenuItem,
   FormHelperText,
+  Typography,
 } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers'
 
 // ICONS
 import CloseIcon from '@mui/icons-material/Close'
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf'
 
 // TYPES & CONSTANTS
 import { DocumentRequest } from 'src/documents/types'
@@ -42,6 +44,9 @@ interface Props {
   isOpen: boolean
   onClose: () => void
   onSave: (data: DocumentRequest) => void
+  file: string | null
+  fileName: string | null
+  onPreview: (file: string | null, fileName: string | null) => void
   scannedDocumentId: number | null
 }
 
@@ -49,6 +54,9 @@ export const SaveDocumentDialog: React.FC<Props> = ({
   isOpen,
   onClose,
   onSave,
+  file,
+  fileName,
+  onPreview,
   scannedDocumentId,
 }) => {
   const theme = useTheme()
@@ -169,7 +177,26 @@ export const SaveDocumentDialog: React.FC<Props> = ({
       slotProps={{ paper: { style: { overflowX: 'hidden' } } }}
     >
       <Box display="flex" justifyContent="space-between">
-        <DialogTitle>Save Document</DialogTitle>
+        <DialogTitle gap={theme.spacing(1)} display="flex" alignItems="center">
+          Save Document
+          <Button
+            variant="contained"
+            size="small"
+            disabled={!file}
+            onClick={() => onPreview(file, fileName)}
+          >
+            <Box
+              component="span"
+              display="flex"
+              alignItems="center"
+              gap={theme.spacing(0.5)}
+            >
+              <Typography variant="body2">Preview</Typography>
+
+              <PictureAsPdfIcon />
+            </Box>
+          </Button>
+        </DialogTitle>
 
         <IconButton onClick={onClose} color="error">
           <CloseIcon />
