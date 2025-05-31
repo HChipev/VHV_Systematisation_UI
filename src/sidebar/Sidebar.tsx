@@ -31,6 +31,7 @@ import { CollapseLink } from 'src/sidebar/components/CollapseLink'
 
 // ICONS
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined'
+import logo from 'src/assets/logo.svg'
 
 // CONSTANTS
 import { SIDE_BAR_ROUTES } from 'src/sidebar/constants'
@@ -75,7 +76,7 @@ export const Sidebar: React.FC = () => {
           >
             <Box display="flex" flexDirection="column">
               <img
-                src="src/assets/logo.svg"
+                src={logo}
                 alt="App Logo"
                 style={{
                   height: `${isCollapsed ? '60px' : '90px'}`,
